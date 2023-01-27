@@ -37,14 +37,12 @@ xoutDepth = pipeline.create(dai.node.XLinkOut)
 xoutSpatialData = pipeline.create(dai.node.XLinkOut)
 xinSpatialCalcConfig = pipeline.create(dai.node.XLinkIn)
 
-xoutRgb = pipeline.create(dai.node.XLinkOut)
 trackerOut = pipeline.create(dai.node.XLinkOut)
 
 xoutDepth.setStreamName("depth")
 xoutSpatialData.setStreamName("spatialData")
 xinSpatialCalcConfig.setStreamName("spatialCalcConfig")
 
-xoutRgb.setStreamName("preview")
 trackerOut.setStreamName("tracklets")
 
 # Properties
@@ -88,7 +86,6 @@ monoLeft.out.link(stereo.left)
 monoRight.out.link(stereo.right)
 
 camRgb.preview.link(spatialDetectionNetwork.input)
-objectTracker.passthroughTrackerFrame.link(xoutRgb.input)
 objectTracker.out.link(trackerOut.input)
 
 if fullFrameTracking:
@@ -132,22 +129,15 @@ with dai.Device(pipeline) as device:
     # things that are being tracked
     tracklets = device.getOutputQueue("tracklets", 4, False)
 
-    color = (255, 255, 255)
-
     while True:
         inDepth = depthQueue.get() # Blocking call, will wait until a new data has arrived
-        print("wait for depth frame")
         depthFrame = inDepth.getFrame() # depthFrame values are in millimeters
 
-        print("wait for spatial data")
         spatialData = spatialCalcQueue.get().getSpatialLocations()
-        print("wait for tracklets")
         trackletsData = tracklets.get().tracklets
-        print("make depths")
         
         depths = [int(data.spatialCoordinates.z) for data in spatialData]
         print(depths)
-        print("display tracklet data")
         for t in trackletsData:
             label = labelMap[t.label] if t.label < len(labelMap) else str(t.label)
-            print(f"found tracklet {t.id}: {label} at ({t.spatialCoordinates.x}, {t.spatialCoordinates.y}, {t.spatialCoordinates.z})") 
+            print(f"found tracklet {t.id}: {label} at ({t.spatialCoordinates.x:.4}, {t.spatialCoordinates.y:.4}, {t.spatialCoordinates.z:.4})") 
