@@ -122,7 +122,7 @@ for col in range(NUM_COLUMNS):
 
     
 
-orientation = Orientation(pipeline, device)
+orientation = Orientation(pipeline)
 
 # Connect to device and start pipeline
 with dai.Device(pipeline) as device:
