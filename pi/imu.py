@@ -8,10 +8,11 @@ Date: 2/02/2023
 from ahrs.filters import Madgwick
 from ahrs.common.quaternion import Quaternion
 import depthai as dai
+import numpy as np
 
 
 class Orientation:
-    def __init__(self, pipeline, device):
+    def __init__(self, pipeline):
         self.madgwick_filter = Madgwick()
         self.orientation_q = np.array([1.0, 0.0, 0.0, 0.0])
         self.pipeline = pipeline  # dai pipeline
