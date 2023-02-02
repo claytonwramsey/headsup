@@ -10,7 +10,9 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./haptic.obj" \
 "./main.obj" \
+"./old_main.obj" \
 "../lnk_msp430g2553.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -154,8 +156,8 @@ embedded.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" 
-	-$(RM) "main.d" 
+	-$(RM) "haptic.obj" "main.obj" "old_main.obj" 
+	-$(RM) "haptic.d" "main.d" "old_main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
