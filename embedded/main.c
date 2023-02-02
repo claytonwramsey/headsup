@@ -13,13 +13,18 @@
 #include <string.h>
 #include <math.h>
 #include "haptic.h"
+#include "adc.h"
+
+unsigned int adc[8];
 
 int main() {
     P2DIR = 0;
     P2OUT = 0;
+    WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
 
     haptic_setup();
     start_pwm();
+    adc_setup();
 
     while (1) {
         // main loop

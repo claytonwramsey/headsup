@@ -10,6 +10,7 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./adc.obj" \
 "./haptic.obj" \
 "./main.obj" \
 "./old_main.obj" \
@@ -156,8 +157,8 @@ embedded.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "haptic.obj" "main.obj" "old_main.obj" 
-	-$(RM) "haptic.d" "main.d" "old_main.d" 
+	-$(RM) "adc.obj" "haptic.obj" "main.obj" "old_main.obj" 
+	-$(RM) "adc.d" "haptic.d" "main.d" "old_main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
