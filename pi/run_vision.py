@@ -4,6 +4,7 @@ from pathlib import Path
 import cv2
 import depthai as dai
 import argparse
+import imu
 
 labelMap = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow",
             "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
@@ -118,6 +119,11 @@ for col in range(NUM_COLUMNS):
     cfgdata.roi = dai.Rect(topLeft, bottomRight)
     spatialLocationCalculator.initialConfig.addROI(cfgdata)
 
+
+    
+
+orientation = Orientation(pipeline, device)
+
 # Connect to device and start pipeline
 with dai.Device(pipeline) as device:
 
@@ -125,13 +131,15 @@ with dai.Device(pipeline) as device:
     depthQueue = device.getOutputQueue(name="depth", maxSize=4, blocking=False)
     spatialCalcQueue = device.getOutputQueue(name="spatialData", maxSize=4, blocking=False)
     spatialCalcConfigInQueue = device.getInputQueue("spatialCalcConfig")
-    
     # things that are being tracked
     tracklets = device.getOutputQueue("tracklets", 4, False)
+    orientation.create_queue()
 
     while True:
         inDepth = depthQueue.get() # Blocking call, will wait until a new data has arrived
         depthFrame = inDepth.getFrame() # depthFrame values are in millimeters
+
+        orientation.update()
 
         spatialData = spatialCalcQueue.get().getSpatialLocations()
         trackletsData = tracklets.get().tracklets

@@ -38,6 +38,12 @@ class Orientation:
         # Link plugins IMU -> XLINK
         imu.out.link(xlinkOut.input)
 
+    def create_queue(device: Device):
+        """
+        Prepare the IMU.
+        Must be called before calling `update()`.
+        """
+
         # The queue will store several readings sent in bulk over a USB connection
         self.imuQueue = device.getOutputQueue(name="imu", maxSize=50, blocking=False)
 
