@@ -38,7 +38,7 @@ class Orientation:
         # Link plugins IMU -> XLINK
         imu.out.link(xlinkOut.input)
 
-    def create_queue(device: Device):
+    def create_queue(device: dai.Device):
         """
         Prepare the IMU.
         Must be called before calling `update()`.
