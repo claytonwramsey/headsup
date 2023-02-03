@@ -45,6 +45,7 @@ class Orientation:
 
         # Link plugins IMU -> XLINK
         self.imu.out.link(xlinkOut.input)
+        self.orientation_q = np.asarray([1.0, 0.0, 0.0, 0.0])
 
     def use_device(self, device: dai.Device):
         """
@@ -65,12 +66,14 @@ class Orientation:
             raise RuntimeError(
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
 
-        if packet := next(self.imuQueue.get().packets) is not None:
+        packets = self.imuQueue.get().packets
+
+        for packet in packets:
 
             acc_data = packet.acceleroMeter
             gyro_data = packet.gyroscope
 
-            self.madgwick_filter.updateIMU(
+            self.orientation_q = self.madgwick_filter.updateIMU(
                 self.orientation_q, gyr=gyro_data, acc=acc_data, dt=4e-3)
 
     def current_quaterion(self) -> np.ndarray:
