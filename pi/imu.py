@@ -28,9 +28,9 @@ class Orientation:
         xlinkOut.setStreamName("imu")
 
         # enable ACCELEROMETER_RAW at 500 hz rate
-        self.imu.enableIMUSensor(dai.IMUSensor.ACCELEROMETER_CALIBRATED, 500)
+        self.imu.enableIMUSensor(dai.IMUSensor.ACCELEROMETER_RAW, 500)
         # enable GYROSCOPE_RAW at 400 hz rate
-        self.imu.enableIMUSensor(dai.IMUSensor.GYROSCOPE_CALIBRATED, 400)
+        self.imu.enableIMUSensor(dai.IMUSensor.GYROSCOPE_RAW, 400)
         # it's recommended to set both setBatchReportThreshold and setMaxBatchReports to 20 when
         # integrating in a pipeline with a lot of input/output connections.
         # above this threshold packets will be sent in batch of X, if the host is not blocked and
