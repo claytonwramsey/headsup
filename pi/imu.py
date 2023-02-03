@@ -74,7 +74,7 @@ class Orientation:
             gyro_data = packet.gyroscope
 
             self.orientation_q = self.madgwick_filter.updateIMU(
-                self.orientation_q, gyr=gyro_data, acc=acc_data)
+                self.orientation_q, gyr=np.asarray([gyro_data.x, gyro_data.y, gyro_data.z]), acc=np.asarray([acc_data.x, acc_data.y, acc_data.z]))
 
     def current_quaterion(self) -> np.ndarray:
         """
