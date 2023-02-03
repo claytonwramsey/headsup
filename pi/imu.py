@@ -83,4 +83,4 @@ class Orientation:
         if not self.has_device:
             raise RuntimeError(
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
-        return Quaternion.to_angles(self.orientation_q)
+        return self.orientation_q
