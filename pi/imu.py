@@ -64,9 +64,8 @@ class Orientation:
         if not self.has_device:
             raise RuntimeError(
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
-        imu_packets = self.imuQueue.get()
 
-        if packet := next(imu_packets) is not None:
+        if packet := next(self.imuQueue.get()) is not None:
 
             acc_data = packet.acceleroMeter
             gyro_data = packet.gyroscope
