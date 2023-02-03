@@ -76,7 +76,7 @@ class Orientation:
             self.orientation_q = self.madgwick_filter.updateIMU(
                 self.orientation_q, gyr=np.asarray([gyro_data.x, gyro_data.y, gyro_data.z]), acc=np.asarray([acc_data.x, acc_data.y, acc_data.z]))
 
-    def current_quaterion(self) -> np.ndarray:
+    def current_quaternion(self) -> np.ndarray:
         """
         Get the current heading of the orientation as a quaternion.
         """
