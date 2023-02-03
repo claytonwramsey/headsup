@@ -64,11 +64,15 @@ class Orientation:
         if not self.has_device:
             raise RuntimeError(
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
-        imu_packet = self.imuQueue.get()
-        acc_data = imu_packet.accelerometer
-        gyro_data = imu_packet.gyroscope
-        self.madgwick_filter.updateIMU(
-            self.orientation_q, gyr=gyro_data, acc=acc_data, dt=4e-3)
+        imu_packets = self.imuQueue.get()
+
+        if packet := next(imu_packets) is not None:
+
+            acc_data = packet.acceleroMeter
+            gyro_data = packet.gyroscope
+
+            self.madgwick_filter.updateIMU(
+                self.orientation_q, gyr=gyro_data, acc=acc_data, dt=4e-3)
 
     def current_quaterion(self) -> np.ndarray:
         """
