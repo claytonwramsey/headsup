@@ -17,7 +17,7 @@ class Orientation:
         Initialize the orientation computation system.
         """
         self.has_device = False
-        self.madgwick_filter = Madgwick()
+        self.madgwick_filter = Madgwick(Dt=4e-3)
         self.orientation_q = np.array([1.0, 0.0, 0.0, 0.0])
         self.pipeline = pipeline  # dai pipeline
 
@@ -74,7 +74,7 @@ class Orientation:
             gyro_data = packet.gyroscope
 
             self.orientation_q = self.madgwick_filter.updateIMU(
-                self.orientation_q, gyr=gyro_data, acc=acc_data, dt=4e-3)
+                self.orientation_q, gyr=gyro_data, acc=acc_data)
 
     def current_quaterion(self) -> np.ndarray:
         """
