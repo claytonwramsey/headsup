@@ -11,9 +11,13 @@ def main():
     vision = VisionSystem(pipeline)
 
     with dai.Device(pipeline) as device:
-        vision.periodic()
-        orientation.periodic()
-        print(orientation.current_quaternion())
+        vision.use_device(device)
+        orientation.use_device(device)
+
+        while True:
+            vision.periodic()
+            orientation.periodic()
+            print(orientation.current_quaternion())
 
 
 if __name__ == "__main__":
