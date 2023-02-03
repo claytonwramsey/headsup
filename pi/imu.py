@@ -65,7 +65,7 @@ class Orientation:
             raise RuntimeError(
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
         imu_packet = self.imuQueue.get()
-        acc_data = imu_packet.acceleroMeter
+        acc_data = imu_packet.accelerometer
         gyro_data = imu_packet.gyroscope
         self.madgwick_filter.updateIMU(
             self.orientation_q, gyr=gyro_data, acc=acc_data, dt=4e-3)
