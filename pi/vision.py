@@ -1,6 +1,7 @@
 from pathlib import Path
 import depthai as dai
 import numpy as np
+import os
 
 
 class VisionSystem:
@@ -151,6 +152,7 @@ class VisionSystem:
 
         depths = [int(data.spatialCoordinates.z) for data in spatialData]
         # print(depths)
+        os.clear()
         for t in trackletsData:
             tracklet_coordinates = np.array([t.spatialCoordinates.x, t.spatialCoordinates.y, t.spatialCoordinates.z])
             rho = np.sqrt(t.spatialCoordinates.x ** 2 + t.spatialCoordinates.z ** 2) * 0.00328084
