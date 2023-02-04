@@ -17,7 +17,7 @@ def main():
         while True:
             vision.periodic()
             orientation.periodic()
-            print(orientation.current_quaternion())
+            # print(orientation.current_quaternion())
 
 
 if __name__ == "__main__":
