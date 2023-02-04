@@ -157,7 +157,7 @@ class VisionSystem:
             theta = np.arctan2(t.spatialCoordinates.x, t.spatialCoordinates.z) * 180/np.pi
 
             print(f"({rho}, {theta})")
-            t.label = f"({rho}, {theta})"
+            # t.label = f"({rho}, {theta})"
 
             # label = VisionSystem.LABEL_MAP[t.label] if t.label < len(
             #     VisionSystem.LABEL_MAP) else str(t.label)
