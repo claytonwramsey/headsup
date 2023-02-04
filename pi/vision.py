@@ -151,7 +151,15 @@ class VisionSystem:
         depths = [int(data.spatialCoordinates.z) for data in spatialData]
         print(depths)
         for t in trackletsData:
-            label = VisionSystem.LABEL_MAP[t.label] if t.label < len(
-                VisionSystem.LABEL_MAP) else str(t.label)
-            print(
-                f"found tracklet {t.id}: {label} at ({t.spatialCoordinates.x:.4}, {t.spatialCoordinates.y:.4}, {t.spatialCoordinates.z:.4})")
+            tracklet_coordinates = np.array([data.spatialCoordinates.x, data.spatialCoordinates.y, data.spatialCoordinates.z])
+            rho = np.sqrt(data.spatialCoordinates.x ** 2 + data.spatialCoordinates.z ** 2) * 0.00328084
+            theta = np.arctan2(data.spatialCoordinates.x, data.spatialCoordinates.z) * 180/np.pi
+
+            
+            t.label = f"({rho}, {theta})"
+
+            # label = VisionSystem.LABEL_MAP[t.label] if t.label < len(
+            #     VisionSystem.LABEL_MAP) else str(t.label)
+            # print(
+            #     f"found tracklet {t.id}: {label} at ({t.spatialCoordinates.x:.4}, {t.spatialCoordinates.y:.4}, {t.spatialCoordinates.z:.4})")
+
