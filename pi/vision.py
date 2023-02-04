@@ -152,11 +152,10 @@ class VisionSystem:
         depths = [int(data.spatialCoordinates.z) for data in spatialData]
         print(depths)
         for t in trackletsData:
-            tracklet_coordinates = np.array([data.spatialCoordinates.x, data.spatialCoordinates.y, data.spatialCoordinates.z])
-            rho = np.sqrt(data.spatialCoordinates.x ** 2 + data.spatialCoordinates.z ** 2) * 0.00328084
-            theta = np.arctan2(data.spatialCoordinates.x, data.spatialCoordinates.z) * 180/np.pi
+            tracklet_coordinates = np.array([t.spatialCoordinates.x, t.spatialCoordinates.y, t.spatialCoordinates.z])
+            rho = np.sqrt(t.spatialCoordinates.x ** 2 + t.spatialCoordinates.z ** 2) * 0.00328084
+            theta = np.arctan2(t.spatialCoordinates.x, t.spatialCoordinates.z) * 180/np.pi
 
-            
             print(f"({rho}, {theta})")
             t.label = f"({rho}, {theta})"
 
