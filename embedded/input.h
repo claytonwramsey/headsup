@@ -7,8 +7,10 @@
 #include <msp430.h>
 #include <stdlib.h>
 
-#ifndef ADC_H_
-#define ADC_H_
+#ifndef INPUT_H_
+#define INPUT_H_
+
+void input_setup();
 
 void adc_setup();
 

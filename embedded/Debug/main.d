@@ -19,9 +19,9 @@ main.obj: C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/
 main.obj: C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/math.h
 main.obj: C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/_defs.h
 main.obj: C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_limits.h
-main.obj: ../haptic.h
+main.obj: ../input.h
 main.obj: C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/stdlib.h
-main.obj: ../adc.h
+main.obj: ../haptic.h
 main.obj: C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/stdlib.h
 
 ../main.c:
@@ -62,11 +62,11 @@ C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/_defs.h:
 
 C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/machine/_limits.h:
 
-../haptic.h:
+../input.h:
 
 C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/stdlib.h:
 
-../adc.h:
+../haptic.h:
 
 C:/Program\ Files/ccs/tools/compiler/ti-cgt-msp430_21.6.0.LTS/include/stdlib.h:
 

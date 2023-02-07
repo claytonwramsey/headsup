@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker PC v21.6.0                     
 ******************************************************************************
->> Linked Thu Feb  2 16:30:23 2023
+>> Linked Mon Feb  6 22:27:20 2023
 
 OUTPUT FILE NAME:   <embedded.out>
-ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000c056
+ENTRY POINT SYMBOL: "_c_int00_noinit_noargs"  address: 0000c070
 
 
 MEMORY CONFIGURATION
@@ -19,7 +19,7 @@ MEMORY CONFIGURATION
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 0000c000   00003fde  00000082  00003f5c  RWIX
+  FLASH                 0000c000   00003fde  000000a2  00003f3c  RWIX
   BSLSIGNATURE          0000ffde   00000002  00000002  00000000  RWIX  ffff 
   INT00                 0000ffe0   00000002  00000002  00000000  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
@@ -48,15 +48,15 @@ section   page    origin      length       input sections
                   000003b0    00000002     rts430_eabi.lib : boot.c.obj (.stack)
                   000003b2    0000004e     --HOLE--
 
-.text      0    0000c000    00000082     
-                  0000c000    00000024     haptic.obj (.text:haptic_setup)
-                  0000c024    0000001c     main.obj (.text:main)
-                  0000c040    00000016     adc.obj (.text:adc_setup)
-                  0000c056    00000014     rts430_eabi.lib : boot.c.obj (.text:_c_int00_noinit_noargs)
-                  0000c06a    00000008                     : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
-                  0000c072    00000006                     : exit.c.obj (.text:abort)
-                  0000c078    00000006     haptic.obj (.text:start_pwm)
-                  0000c07e    00000004     rts430_eabi.lib : pre_init.c.obj (.text:_system_pre_init)
+.text      0    0000c000    000000a2     
+                  0000c000    00000034     input.obj (.text:button)
+                  0000c034    00000022     main.obj (.text:main)
+                  0000c056    0000001a     input.obj (.text:input_setup)
+                  0000c070    00000014     rts430_eabi.lib : boot.c.obj (.text:_c_int00_noinit_noargs)
+                  0000c084    0000000c     haptic.obj (.text:haptic_setup)
+                  0000c090    00000008     rts430_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
+                  0000c098    00000006                     : exit.c.obj (.text:abort)
+                  0000c09e    00000004                     : pre_init.c.obj (.text:_system_pre_init)
 
 .cinit     0    0000c000    00000000     
 
@@ -69,7 +69,7 @@ TRAPINT    0    0000ffe0    00000002
                   0000ffe0    00000002     rts430_eabi.lib : int00.asm.obj (.int00)
 
 PORT1      0    0000ffe4    00000002     
-                  0000ffe4    00000002     rts430_eabi.lib : int02.asm.obj (.int02)
+                  0000ffe4    00000002     input.obj (.int02)
 
 PORT2      0    0000ffe6    00000002     
                   0000ffe6    00000002     rts430_eabi.lib : int03.asm.obj (.int03)
@@ -122,11 +122,11 @@ MODULE SUMMARY
        Module             code   ro data   rw data
        ------             ----   -------   -------
     .\
-       haptic.obj         42     0         0      
-       main.obj           28     0         0      
-       adc.obj            22     0         0      
+       input.obj          78     2         0      
+       main.obj           34     0         0      
+       haptic.obj         12     0         0      
     +--+------------------+------+---------+---------+
-       Total:             92     0         0      
+       Total:             124    2         0      
                                                   
     C:\Program Files\ccs\tools\compiler\ti-cgt-msp430_21.6.0.LTS\lib\rts430_eabi.lib
        boot.c.obj         20     2         0      
@@ -134,7 +134,6 @@ MODULE SUMMARY
        exit.c.obj         6      0         0      
        pre_init.c.obj     4      0         0      
        int00.asm.obj      0      2         0      
-       int02.asm.obj      0      2         0      
        int03.asm.obj      0      2         0      
        int05.asm.obj      0      2         0      
        int06.asm.obj      0      2         0      
@@ -147,11 +146,11 @@ MODULE SUMMARY
        int13.asm.obj      0      2         0      
        int14.asm.obj      0      2         0      
     +--+------------------+------+---------+---------+
-       Total:             38     28        0      
+       Total:             38     26        0      
                                                   
        Stack:             0      0         80     
     +--+------------------+------+---------+---------+
-       Grand Total:       130    28        80     
+       Grand Total:       162    28        80     
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -168,7 +167,7 @@ address   name
 00000057  BCSCTL1               
 00000058  BCSCTL2               
 00000053  BCSCTL3               
-0000c072  C$$EXIT               
+0000c098  C$$EXIT               
 00000059  CACTL1                
 0000005a  CACTL2                
 000010fb  CALBC1_12MHZ          
@@ -262,7 +261,7 @@ address   name
 0000c000  __TI_CINIT_Base       
 0000c000  __TI_CINIT_Limit      
 0000c000  __TI_CINIT_Warm       
-0000c06a  __TI_ISR_TRAP         
+0000c090  __TI_ISR_TRAP         
 0000ffe0  __TI_int00            
 0000ffe4  __TI_int02            
 0000ffe6  __TI_int03            
@@ -280,15 +279,15 @@ ffffffff  __TI_pprof_out_hndl
 ffffffff  __TI_prof_data_size   
 ffffffff  __TI_prof_data_start  
 ffffffff  __c_args__            
-0000c056  _c_int00_noinit_noargs
+0000c070  _c_int00_noinit_noargs
 0000fffe  _reset_vector         
 000003b0  _stack                
-0000c07e  _system_pre_init      
-0000c072  abort                 
-0000c040  adc_setup             
-0000c000  haptic_setup          
-0000c024  main                  
-0000c078  start_pwm             
+0000c09e  _system_pre_init      
+0000c098  abort                 
+0000c000  button                
+0000c084  haptic_setup          
+0000c056  input_setup           
+0000c034  main                  
 
 
 GLOBAL SYMBOLS: SORTED BY Symbol Address 
@@ -399,15 +398,15 @@ address   name
 0000c000  __TI_CINIT_Base       
 0000c000  __TI_CINIT_Limit      
 0000c000  __TI_CINIT_Warm       
-0000c000  haptic_setup          
-0000c024  main                  
-0000c040  adc_setup             
-0000c056  _c_int00_noinit_noargs
-0000c06a  __TI_ISR_TRAP         
-0000c072  C$$EXIT               
-0000c072  abort                 
-0000c078  start_pwm             
-0000c07e  _system_pre_init      
+0000c000  button                
+0000c034  main                  
+0000c056  input_setup           
+0000c070  _c_int00_noinit_noargs
+0000c084  haptic_setup          
+0000c090  __TI_ISR_TRAP         
+0000c098  C$$EXIT               
+0000c098  abort                 
+0000c09e  _system_pre_init      
 0000ffe0  __TI_int00            
 0000ffe4  __TI_int02            
 0000ffe6  __TI_int03            

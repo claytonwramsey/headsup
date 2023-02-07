@@ -9,12 +9,12 @@
  * Prepares TimerA to generate PWM signal.
  */
 void haptic_setup() {
-    CCTL0 = CCIE; // Timer A interrupt enabled (CCTL0 is TACCTL0)
-    CCR0 = 0x0329; // set Timer A interrupt to trigger every 50,000 CPU cycles
-    TA0CTL = TASSEL_2 + MC_1 + ID_3; // set Timer A to up mode with SMCLK as a counting trigger and an /8 divider
-    TA0CCTL1 |= OUTMOD_7;
+    // CCTL0 = CCIE; // Timer A interrupt enabled (CCTL0 is TACCTL0)
+    // CCR0 = 0x0329; // set Timer A interrupt to trigger every 50,000 CPU cycles
+    // TA0CTL = TASSEL_2 + MC_1 + ID_3; // set Timer A to up mode with SMCLK as a counting trigger and an /8 divider
+    // TA0CCTL1 |= OUTMOD_7;
 
-    P2DIR |= BIT1 | BIT2 | BIT3 | BIT4 | BIT5; // set pin 2.1, 2.2, 2.3, 2.4 and 2.5 as outputs
+    P2DIR |= (BIT1 + BIT2 + BIT3 + BIT4 + BIT5); // set pin 2.1, 2.2, 2.3, 2.4 and 2.5 as outputs
     P2SEL |= BIT1; // pwm-enable pin 2.1
 }
 

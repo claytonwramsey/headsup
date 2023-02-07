@@ -4,7 +4,7 @@
  * Note that eventually an external ADC will be used to simultaneously sample all
  * channels.
  *
- * @date 1/27/2023
+ * @date 2/05/2023
  */
 
 #include <msp430.h> 
@@ -12,22 +12,26 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include "input.h"
 #include "haptic.h"
-#include "adc.h"
 
 unsigned int adc[8];
 
 int main() {
-    P2DIR = 0;
-    P2OUT = 0;
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
+    P1DIR = 0;
+    P2DIR = 0;
+    P1OUT = 0;
+    P2OUT = 0;
 
     haptic_setup();
-    start_pwm();
-    adc_setup();
+    // start_pwm();
+    input_setup();
+    // adc_setup();
+
+    _enable_interrupts();
 
     while (1) {
         // main loop
-
     }
 }
