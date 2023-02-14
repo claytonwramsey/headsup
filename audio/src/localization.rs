@@ -29,10 +29,9 @@ pub struct Event<const DIM: usize> {
 ///
 /// - `mic_events`: A list of events corresponding to impulse receipts on the microphones.
 /// - `n_iters`: The number of iterations to run the solver for.
-/// - `time_err_scaling`: The scaling factor for error in time (to normalize it into distance).
 /// - `err_tolerance`: The maximum allowable error for a converged solution to the source of the
 ///     shot.
-/// - `step_scale`: A hyperparameter for the size of a gradient descent step.
+/// - `step_scale`: A hyperparameter for the scaling of gradient descent steps.
 ///
 /// # Returns
 ///
@@ -50,8 +49,7 @@ pub fn source_of_shot<const DIM: usize>(
     mic_events: &[Event<DIM>],
     n_iters: usize,
     err_tolerance: f32,
-    step_scale_space: f32,
-    step_scale_time: f32,
+    step_scale: f32,
 ) -> Result<(Event<DIM>, usize, f32), ()> {
     // initial guess: the gunshot happened at the point where the first impulse was received
     // and at the time when the impulse arrived
@@ -83,14 +81,14 @@ pub fn source_of_shot<const DIM: usize>(
         for ((residual, distance), event) in forward_results.into_iter().zip(mic_events.iter()) {
             // contribution from this microphone event in space
             for dim_id in 0..DIM {
-                origin_estimate.location.0[dim_id] -= step_scale_space
+                origin_estimate.location.0[dim_id] -= step_scale
                     * 2.0
                     * residual
                     * (origin_estimate.location.0[dim_id] - event.location.0[dim_id])
                     / (SPEED_OF_SOUND * (distance + 1e-4) * mic_events.len() as f32);
             }
             // contribution from this microphone event in time
-            origin_estimate.time -= step_scale_time * 2.0 * residual / mic_events.len() as f32;
+            origin_estimate.time -= step_scale * 2.0 * residual / mic_events.len() as f32;
         }
     }
 
@@ -118,8 +116,7 @@ mod tests {
         n_iters: usize,
         n_mics: usize,
         fit_tolerance: f32,
-        step_scale_space: f32,
-        step_scale_time: f32,
+        step_scale: f32,
         angular_error_tolerance: f32,
     ) {
         /// The radius of the helmet.
@@ -151,14 +148,8 @@ mod tests {
             println!("{:?}", events[events.len() - 1]);
         }
 
-        let (event, iters_used, train_err) = source_of_shot(
-            &events,
-            n_iters,
-            fit_tolerance,
-            step_scale_space,
-            step_scale_time,
-        )
-        .unwrap();
+        let (event, iters_used, train_err) =
+            source_of_shot(&events, n_iters, fit_tolerance, step_scale).unwrap();
 
         assert!(iters_used < n_iters);
         assert!(train_err < fit_tolerance);
@@ -177,11 +168,11 @@ mod tests {
     #[should_panic]
     #[allow(unused_must_use)]
     fn nodim_panics() {
-        source_of_shot::<0>(&[], 0, 0.0, 0.0, 0.0);
+        source_of_shot::<0>(&[], 0, 0.0, 0.0);
     }
 
     #[test]
     fn two_dimensional() {
-        source_helper::<2>(1234, 30, 8, 1e-9, 2.0, 2.0, 0.1);
+        source_helper::<2>(1234, 30, 8, 1e-9, 2.0, 0.1);
     }
 }
