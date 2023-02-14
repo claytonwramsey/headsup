@@ -1,1 +1,0 @@
-"./haptic.obj" "./input.obj" "./main.obj" "./old_main.obj" "../lnk_msp430g2553.cmd" -llibc.a 
