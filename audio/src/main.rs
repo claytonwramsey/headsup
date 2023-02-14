@@ -1,3 +1,5 @@
+#![warn(clippy::pedantic)]
+
 use std::time::Instant;
 
 use gpio_cdev::{EventRequestFlags, LineRequestFlags};
