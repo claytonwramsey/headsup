@@ -1,12 +1,22 @@
 #![warn(clippy::pedantic)]
 
-use std::time::Instant;
+use std::{
+    sync::Mutex,
+    time::{Duration, Instant},
+};
 
 use gpio_cdev::{EventRequestFlags, LineRequestFlags};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
     const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
+
+    let event_start_time = Mutex::new(None);
+    let seen_events = Mutex::new(vec![false; MIC_INPUT_PINS.len()]);
+
+    let mutex_ref = &event_start_time;
+    let seen_events_ref = &seen_events;
+    let event_duration = Duration::from_millis(500);
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
@@ -27,15 +37,39 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         for (mic_id, event_source) in event_sources.enumerate() {
             handles.push(s.spawn(move || {
                 for event in event_source {
-                    match event {
-                        Ok(_) => {
+                    if event.is_err() {
+                        continue;
+                    }
+                    let mut ev_start_guard = mutex_ref.lock().unwrap();
+                    let now = Instant::now();
+                    match *ev_start_guard {
+                        Some(time) if now.duration_since(time) > event_duration => {
+                            *ev_start_guard = Some(now);
+                            let mut new_seen = vec![false; MIC_INPUT_PINS.len()];
+                            new_seen[mic_id] = true;
+                            *seen_events_ref.lock().unwrap() = new_seen;
+
                             println!(
-                                "rising edge on mic thread {mic_id} at time {:?}",
-                                Instant::now().duration_since(start_time)
+                                "started mic event on thread {mic_id} at time {:?}",
+                                now.duration_since(start_time)
                             );
                         }
-                        Err(_) => println!("error on mic thread {mic_id}"),
-                    }
+                        None => {
+                            *ev_start_guard = Some(now);
+                            let mut new_seen = vec![false; MIC_INPUT_PINS.len()];
+                            new_seen[mic_id] = true;
+                            *seen_events_ref.lock().unwrap() = new_seen;
+                            println!(
+                                "started mic event on thread {mic_id} at time {:?}",
+                                now.duration_since(start_time)
+                            );
+                        }
+                        _ if !seen_events_ref.lock().unwrap()[mic_id] => {
+                            seen_events_ref.lock().unwrap()[mic_id] = true;
+                            println!("observed mic event on thread {mic_id}");
+                        }
+                        _ => (),
+                    };
                 }
             }));
         }
