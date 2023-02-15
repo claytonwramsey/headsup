@@ -6,7 +6,7 @@ use gpio_cdev::{EventRequestFlags, LineRequestFlags};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
-    const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 14, 15, 18, 17, 27];
+    const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
