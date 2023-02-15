@@ -53,10 +53,14 @@ pub fn source_of_shot<const DIM: usize>(
 ) -> Result<(Event<DIM>, usize, f32), ()> {
     // initial guess: the gunshot happened at the point where the first impulse was received
     // and at the time when the impulse arrived
-    let mut origin_estimate = *mic_events
-        .iter()
-        .min_by(|e1, e2| e1.time.total_cmp(&e2.time))
-        .unwrap();
+    /*let mut origin_estimate = *mic_events
+    .iter()
+    .min_by(|e1, e2| e1.time.total_cmp(&e2.time))
+    .unwrap();*/
+    let mut origin_estimate = Event {
+        location: Point([30.0; DIM]),
+        time: 0.0,
+    };
     for iter_id in 0..n_iters {
         let mut mse = 0.0;
         let mut forward_results = Vec::new();
@@ -77,19 +81,21 @@ pub fn source_of_shot<const DIM: usize>(
             return Ok((origin_estimate, iter_id, mse));
         }
 
+        let mut new_estimate = origin_estimate;
         // perform one step of gradient descent
         for ((residual, distance), event) in forward_results.into_iter().zip(mic_events.iter()) {
             // contribution from this microphone event in space
             for dim_id in 0..DIM {
-                origin_estimate.location.0[dim_id] -= step_scale
+                new_estimate.location.0[dim_id] -= step_scale
                     * 2.0
                     * residual
                     * (origin_estimate.location.0[dim_id] - event.location.0[dim_id])
                     / (SPEED_OF_SOUND * (distance + 1e-4) * mic_events.len() as f32);
             }
             // contribution from this microphone event in time
-            origin_estimate.time -= step_scale * 2.0 * residual / mic_events.len() as f32;
+            new_estimate.time -= step_scale * 2.0 * residual / mic_events.len() as f32;
         }
+        origin_estimate = new_estimate;
     }
 
     Err(())
@@ -173,6 +179,6 @@ mod tests {
 
     #[test]
     fn two_dimensional() {
-        source_helper::<2>(1234, 30, 8, 1e-9, 2.0, 0.1);
+        source_helper::<2>(1234, 30, 8, 1e-9, 1.0, 0.1);
     }
 }
