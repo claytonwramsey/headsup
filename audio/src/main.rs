@@ -6,7 +6,7 @@ use gpio_cdev::{EventRequestFlags, LineRequestFlags};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
-    const MIC_INPUT_PINS: [u32; 8] = [0, 1, 2, 3, 4, 5, 6, 7];
+    const MIC_INPUT_PINS: [u32; 1] = [2];
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
@@ -32,7 +32,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             println!(
                                 "rising edge on mic thread {mic_id} at time {:?}",
                                 Instant::now().duration_since(start_time)
-                            )
+                            );
                         }
                         Err(_) => println!("error on mic thread {mic_id}"),
                     }
