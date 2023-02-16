@@ -1,7 +1,10 @@
 #![warn(clippy::pedantic)]
 
 use std::{
-    sync::Mutex,
+    sync::{
+        atomic::{AtomicU8, Ordering},
+        Mutex,
+    },
     time::{Duration, Instant},
 };
 
@@ -12,11 +15,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
 
     let event_start_time = Mutex::new(None);
-    let seen_events = Mutex::new(vec![false; MIC_INPUT_PINS.len()]);
-
-    let mutex_ref = &event_start_time;
-    let seen_events_ref = &seen_events;
-    let event_duration = Duration::from_millis(500);
+    let event_start_ref = &event_start_time;
+    // Bitmap.
+    // seen_status & 1 << i corresponds to whether the i-th mic has already seen a rising edge in
+    // this impulse event.
+    let seen_status = AtomicU8::new(0);
+    let seen_status_ref = &seen_status;
+    let event_duration = Duration::from_millis(100);
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
@@ -40,36 +45,37 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     if event.is_err() {
                         continue;
                     }
-                    let mut ev_start_guard = mutex_ref.lock().unwrap();
                     let now = Instant::now();
-                    match *ev_start_guard {
-                        Some(time) if now.duration_since(time) > event_duration => {
-                            *ev_start_guard = Some(now);
-                            let mut new_seen = vec![false; MIC_INPUT_PINS.len()];
-                            new_seen[mic_id] = true;
-                            *seen_events_ref.lock().unwrap() = new_seen;
+                    let mut event_start_guard = event_start_ref.lock().unwrap();
 
-                            println!(
-                                "started mic event on thread {mic_id} at time {:?}",
-                                now.duration_since(start_time)
-                            );
-                        }
-                        None => {
-                            *ev_start_guard = Some(now);
-                            let mut new_seen = vec![false; MIC_INPUT_PINS.len()];
-                            new_seen[mic_id] = true;
-                            *seen_events_ref.lock().unwrap() = new_seen;
-                            println!(
-                                "started mic event on thread {mic_id} at time {:?}",
-                                now.duration_since(start_time)
-                            );
-                        }
-                        _ if !seen_events_ref.lock().unwrap()[mic_id] => {
-                            seen_events_ref.lock().unwrap()[mic_id] = true;
-                            println!("observed mic event on thread {mic_id}");
-                        }
-                        _ => (),
-                    };
+                    // if it's been a while since the last rising edge seen by anyone,
+                    // or nobody's seeon one at all,
+                    // it's a new rising edge event.
+                    if event_start_guard
+                        .map(|start_time| now.duration_since(start_time) > event_duration)
+                        .unwrap_or(true)
+                    {
+                        *event_start_guard = Some(now);
+                        // make sure to release the mutex as early as possible!
+                        drop(event_start_guard);
+                        seen_status_ref.store(1 << mic_id, Ordering::Relaxed);
+                        println!(
+                            "Microphone {mic_id} saw a rising edge at {:?} and started the event",
+                            now.duration_since(start_time)
+                        );
+                        continue;
+                    }
+                    // make sure to release the mutex as early as possible!
+                    drop(event_start_guard);
+                    // if this thread hasn't seen a rising edge in this event, mark it as seeing one
+                    // and update to match
+                    if seen_status_ref.load(Ordering::Relaxed) & 1 << mic_id != 0 {
+                        seen_status_ref.fetch_or(1 << mic_id, Ordering::Relaxed);
+                        println!(
+                            "Microphone {mic_id} saw a rising edge at {:?}",
+                            now.duration_since(start_time)
+                        );
+                    }
                 }
             }));
         }
