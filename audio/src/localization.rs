@@ -53,28 +53,22 @@ pub fn source_of_shot<const DIM: usize>(
 ) -> Result<(Event<DIM>, usize, f32), ()> {
     // initial guess: the gunshot happened at the point where the first impulse was received
     // and at the time when the impulse arrived
-    /*let mut origin_estimate = *mic_events
-    .iter()
-    .min_by(|e1, e2| e1.time.total_cmp(&e2.time))
-    .unwrap();*/
-    let mut origin_estimate = Event {
-        location: Point([30.0; DIM]),
-        time: 0.0,
-    };
+    let mut origin_estimate = *mic_events
+        .iter()
+        .min_by(|e1, e2| e1.time.total_cmp(&e2.time))
+        .unwrap();
     for iter_id in 0..n_iters {
         let mut mse = 0.0;
-        let mut forward_results = Vec::new();
+        let mut residuals = Vec::new();
 
-        for event in mic_events {
-            let distance = distance(&event.location, &origin_estimate.location);
-            let prediction = origin_estimate.time + distance / SPEED_OF_SOUND;
-            let residual = prediction - event.time;
-            mse += residual.powi(2);
-            forward_results.push((residual, distance));
+        for mic_event in mic_events {
+            let res: Seconds = residual(&origin_estimate, mic_event);
+            mse += res.powi(2);
+            residuals.push(res);
         }
 
         mse /= mic_events.len() as f32;
-        println!("iter {iter_id}, prediction {origin_estimate:?}, mse {mse} vs {err_tolerance}");
+        // println!("iter {iter_id}, prediction {origin_estimate:?}, mse {mse} vs {err_tolerance}");
 
         if mse < err_tolerance {
             // converged!
@@ -83,17 +77,14 @@ pub fn source_of_shot<const DIM: usize>(
 
         let mut new_estimate = origin_estimate;
         // perform one step of gradient descent
-        for ((residual, distance), event) in forward_results.into_iter().zip(mic_events.iter()) {
+        for (res, event) in residuals.into_iter().zip(mic_events.iter()) {
             // contribution from this microphone event in space
             for dim_id in 0..DIM {
-                new_estimate.location.0[dim_id] -= step_scale
-                    * 2.0
-                    * residual
-                    * (origin_estimate.location.0[dim_id] - event.location.0[dim_id])
-                    / (SPEED_OF_SOUND * (distance + 1e-4) * mic_events.len() as f32);
+                new_estimate.location.0[dim_id] -=
+                    step_scale * space_gradient(&origin_estimate, event, res, dim_id);
             }
             // contribution from this microphone event in time
-            new_estimate.time -= step_scale * 2.0 * residual / mic_events.len() as f32;
+            new_estimate.time -= step_scale * time_gradient(res);
         }
         origin_estimate = new_estimate;
     }
@@ -110,6 +101,33 @@ fn distance<const DIM: usize>(p1: &Point<DIM>, p2: &Point<DIM>) -> Meters {
         .sqrt()
 }
 
+/// Compute the time-residual error based on the model between the expected time of arrival based on
+/// `origin_estimate` and the true time of arrival.
+fn residual<const DIM: usize>(origin_estimate: &Event<DIM>, mic_event: &Event<DIM>) -> Seconds {
+    let predicted_time = origin_estimate.time
+        + distance(&origin_estimate.location, &mic_event.location) / SPEED_OF_SOUND;
+
+    predicted_time - mic_event.time
+}
+
+/// Compute the gradient in one spatial dimension of the error.
+fn space_gradient<const DIM: usize>(
+    old_estimate: &Event<DIM>,
+    mic_event: &Event<DIM>,
+    residual: f32,
+    index: usize,
+) -> f32 {
+    2.0 * residual * (old_estimate.location.0[index] - mic_event.location.0[index])
+        / SPEED_OF_SOUND
+        / (distance(&mic_event.location, &old_estimate.location) + 1e-5)
+        * SPEED_OF_SOUND.powi(2)
+}
+
+/// Compute the gradient in the time dimension of the error.
+fn time_gradient(residual: f32) -> f32 {
+    2.0 * residual
+}
+
 #[cfg(test)]
 mod tests {
     use std::f32::consts::{PI, TAU};
@@ -124,9 +142,10 @@ mod tests {
         fit_tolerance: f32,
         step_scale: f32,
         angular_error_tolerance: f32,
+        timing_noise_stddev: Seconds,
     ) {
         /// The radius of the helmet.
-        const HELMET_RADIUS: Meters = 10.0;
+        const HELMET_RADIUS: Meters = 0.1;
 
         assert!(DIM >= 2);
 
@@ -140,6 +159,9 @@ mod tests {
         }
         println!("true source position: {true_source:?}");
 
+        // compute width of normal dist to have stddev given
+        let noise_width = timing_noise_stddev * (12.0f32).sqrt();
+
         // distribute microphones evenly about circle
         let mut events = Vec::new();
         for mic_id in 0..n_mics {
@@ -147,9 +169,10 @@ mod tests {
             let mic_angle = TAU * mic_id as f32 / n_mics as f32;
             mic_point.0[0] = HELMET_RADIUS * mic_angle.cos();
             mic_point.0[1] = HELMET_RADIUS * mic_angle.sin();
+            let noise: Seconds = noise_width * fastrand::f32() - (noise_width / 2.0);
             events.push(Event {
                 location: mic_point,
-                time: distance(&mic_point, &true_source) / SPEED_OF_SOUND + true_time,
+                time: distance(&mic_point, &true_source) / SPEED_OF_SOUND + true_time + noise,
             });
             println!("{:?}", events[events.len() - 1]);
         }
@@ -179,6 +202,19 @@ mod tests {
 
     #[test]
     fn two_dimensional() {
-        source_helper::<2>(1234, 30, 8, 1e-9, 1.0, 0.1);
+        for seed in 0..100 {
+            source_helper::<2>(seed, 10000, 8, 5e-10, 0.05, 0.34, 1e-5);
+        }
+    }
+
+    #[test]
+    /// Test that distances in 2 dimensions are calculated correctly
+    fn dist_2d() {
+        let p1 = Point([1.0, 1.0]);
+        let p2 = Point([2.0, 2.0]);
+
+        let dist = distance(&p1, &p2);
+        let err = dist - (2.0f32).abs();
+        assert!(err < 0.01);
     }
 }
