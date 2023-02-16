@@ -174,7 +174,7 @@ mod tests {
                 location: mic_point,
                 time: distance(&mic_point, &true_source) / SPEED_OF_SOUND + true_time + noise,
             });
-            println!("{:?}", events[events.len() - 1]);
+            // println!("{:?}", events[events.len() - 1]);
         }
 
         let (event, iters_used, train_err) =
@@ -201,9 +201,30 @@ mod tests {
     }
 
     #[test]
-    fn two_dimensional() {
+    fn two_dimensional_noisy() {
         for seed in 0..100 {
             source_helper::<2>(seed, 10000, 8, 5e-10, 0.05, 0.34, 1e-5);
+        }
+    }
+
+    #[test]
+    fn two_dimensional_quiet() {
+        for seed in 0..1000 {
+            source_helper::<2>(seed, 10000, 8, 5e-10, 0.05, 0.1, 0.0);
+        }
+    }
+
+    #[test]
+    fn three_dimensional_quiet() {
+        for seed in 0..1000 {
+            source_helper::<3>(seed, 10000, 8, 1e-8, 0.05, 0.34, 0.0);
+        }
+    }
+
+    #[test]
+    fn three_dimensional_noisy() {
+        for seed in 0..1000 {
+            source_helper::<3>(seed, 100000, 8, 5e-9, 0.05, 0.34, 1e-6);
         }
     }
 
