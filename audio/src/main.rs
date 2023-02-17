@@ -85,39 +85,39 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             location: point,
                             time: now.duration_since(start_time).as_secs_f32(),
                         });
-                        continue;
-                    }
-                    // make sure to release the mutex as early as possible!
-                    drop(event_start_guard);
-                    // if this thread hasn't seen a rising edge in this event, mark it as seeing one
-                    // and update to match
-                    if seen_status_ref.load(Ordering::Relaxed) & 1 << mic_id == 0 {
-                        seen_status_ref.fetch_or(1 << mic_id, Ordering::Relaxed);
-                        println!(
-                            "Microphone {mic_id} saw a rising edge at {:?}",
-                            now.duration_since(start_time)
-                        );
-
-                        let mut events_guard = events_ref.lock().unwrap();
-
-                        events_guard.push(Event {
-                            location: point,
-                            time: now.duration_since(start_time).as_secs_f32(),
-                        });
-
-                        if events_guard.len() == MIC_INPUT_PINS.len() {
-                            // we are the last event - initiate a localization process!
-                            let localization_result =
-                                source_of_shot(&events_guard, 10_000, 5e-9, 0.05);
-
-                            if let Ok((shot_evt, n_iters, train_err)) = localization_result {
-                                println!("Localized shot to {shot_evt:?} in {n_iters} iterations (MSE {train_err})");
-                            } else {
-                                println!("Failed to find solution for gunshot source");
-                            }
-
-                            events_guard.clear();
+                    } else {
+                        // make sure to release the mutex as early as possible!
+                        drop(event_start_guard);
+                        // if this thread hasn't seen a rising edge in this event, mark it as seeing one
+                        // and update to match
+                        if seen_status_ref.load(Ordering::Relaxed) & 1 << mic_id == 0 {
+                            seen_status_ref.fetch_or(1 << mic_id, Ordering::Relaxed);
+                            println!(
+                                "Microphone {mic_id} saw a rising edge at {:?}",
+                                now.duration_since(start_time)
+                            );
                         }
+                    }
+    
+                    let mut events_guard = events_ref.lock().unwrap();
+
+                    events_guard.push(Event {
+                        location: point,
+                        time: now.duration_since(start_time).as_secs_f32(),
+                    });
+
+                    if events_guard.len() == MIC_INPUT_PINS.len() {
+                        // we are the last event - initiate a localization process!
+                        let localization_result =
+                            source_of_shot(&events_guard, 10_000, 5e-9, 0.05);
+
+                        if let Ok((shot_evt, n_iters, train_err)) = localization_result {
+                            println!("Localized shot to {shot_evt:?} in {n_iters} iterations (MSE {train_err})");
+                        } else {
+                            println!("Failed to find solution for gunshot source");
+                        }
+
+                        events_guard.clear();
                     }
                 }
             }));
