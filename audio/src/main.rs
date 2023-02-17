@@ -16,14 +16,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
     const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
     const MIC_POINTS: [Point<3>; MIC_INPUT_PINS.len()] = [
-        Point([-0.07, 00.07, 00.00]), // M0 - front left
-        Point([-0.10, 00.00, 00.00]), // M1 - left
-        Point([-0.07, -0.07, 00.00]), // M2- back left
-        Point([00.00, -0.10, 00.00]), // M3 - back
-        Point([00.07, -0.07, 00.00]), // M4 - back right
-        Point([00.10, 00.00, 00.00]), // M5 - right
-        Point([00.07, 00.07, 00.00]), // M6 - front right
-        Point([00.00, 00.10, 00.00]), // M7 - front
+        Point([-0.09, 00.095, 00.00]),  // M0 - front left
+        Point([-0.14, 00.0015, 00.00]), // M1 - left
+        Point([-0.105, -0.06, 00.00]),  // M2- back left
+        Point([00.01, -0.115, 00.00]),  // M3 - back
+        Point([00.09, -0.085, 00.00]),  // M4 - back right
+        Point([00.12, 00.00, 00.00]),   // M5 - right
+        Point([00.085, 00.105, 00.00]), // M6 - front right
+        Point([00.00, 00.16, 00.00]),   // M7 - front
     ];
 
     let event_start_time = Mutex::new(None);
