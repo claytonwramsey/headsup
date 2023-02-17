@@ -10,9 +10,21 @@ use std::{
 
 use gpio_cdev::{EventRequestFlags, LineRequestFlags};
 
+use audio::localization::{source_of_shot, Event, Point};
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
     const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
+    const MIC_POINTS: [Point<3>; MIC_INPUT_PINS.len()] = [
+        Point([-0.07, 00.07, 00.00]), // M0 - front left
+        Point([-0.10, 00.00, 00.00]), // M1 - left
+        Point([-0.07, -0.07, 00.00]), // M2- back left
+        Point([00.00, -0.10, 00.00]), // M3 - back
+        Point([00.07, -0.07, 00.00]), // M4 - back right
+        Point([00.10, 00.00, 00.00]), // M5 - right
+        Point([00.07, 00.07, 00.00]), // M6 - front right
+        Point([00.00, 00.10, 00.00]), // M7 - front
+    ];
 
     let event_start_time = Mutex::new(None);
     let event_start_ref = &event_start_time;
@@ -22,6 +34,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let seen_status = AtomicU8::new(0);
     let seen_status_ref = &seen_status;
     let event_duration = Duration::from_millis(100);
+
+    // List of events observed in this impulse observation
+    let events = Mutex::new(Vec::new());
+    let events_ref = &events;
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
@@ -40,6 +56,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     std::thread::scope(|s| {
         let mut handles = Vec::new();
         for (mic_id, event_source) in event_sources.enumerate() {
+            let point = MIC_POINTS[mic_id];
             handles.push(s.spawn(move || {
                 for event in event_source {
                     if event.is_err() {
@@ -63,6 +80,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             "Microphone {mic_id} saw a rising edge at {:?} and started the event",
                             now.duration_since(start_time)
                         );
+
+                        events_ref.lock().unwrap().push(Event {
+                            location: point,
+                            time: now.duration_since(start_time).as_secs_f32(),
+                        });
                         continue;
                     }
                     // make sure to release the mutex as early as possible!
@@ -75,6 +97,27 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             "Microphone {mic_id} saw a rising edge at {:?}",
                             now.duration_since(start_time)
                         );
+
+                        let mut events_guard = events_ref.lock().unwrap();
+
+                        events_guard.push(Event {
+                            location: point,
+                            time: now.duration_since(start_time).as_secs_f32(),
+                        });
+
+                        if events_guard.len() == MIC_INPUT_PINS.len() {
+                            // we are the last event - initiate a localization process!
+                            let localization_result =
+                                source_of_shot(&events_guard, 10_000, 5e-9, 0.05);
+
+                            if let Ok((shot_evt, n_iters, train_err)) = localization_result {
+                                println!("Localized shot to {shot_evt:?} in {n_iters} iterations (MSE {train_err})");
+                            } else {
+                                println!("Failed to find solution for gunshot source");
+                            }
+
+                            events_guard.clear();
+                        }
                     }
                 }
             }));

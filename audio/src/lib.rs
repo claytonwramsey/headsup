@@ -1,3 +1,3 @@
 #![warn(clippy::pedantic)]
 
-mod localization;
+pub mod localization;

@@ -11,15 +11,15 @@ const SPEED_OF_SOUND: f32 = 343.0;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 /// A point in `DIM`-dimensional space.
-struct Point<const DIM: usize>([Meters; DIM]);
+pub struct Point<const DIM: usize>(pub [Meters; DIM]);
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 /// A point-localized event in time.
 pub struct Event<const DIM: usize> {
     /// The location where the event occurred.
-    location: Point<DIM>,
+    pub location: Point<DIM>,
     /// The time when the event occurred.
-    time: Seconds,
+    pub time: Seconds,
 }
 
 #[allow(clippy::cast_precision_loss, dead_code)]
@@ -41,6 +41,7 @@ pub struct Event<const DIM: usize> {
 ///
 /// This function will return an `Err` if it is unable to find a solution with err below
 /// `err_tolerance` in under `n_iters` steps.
+/// It will return its best-guess as to where the solution is.
 ///
 /// # Panics
 ///
@@ -50,15 +51,16 @@ pub fn source_of_shot<const DIM: usize>(
     n_iters: usize,
     err_tolerance: f32,
     step_scale: f32,
-) -> Result<(Event<DIM>, usize, f32), ()> {
+) -> Result<(Event<DIM>, usize, f32), (Event<DIM>, f32)> {
     // initial guess: the gunshot happened at the point where the first impulse was received
     // and at the time when the impulse arrived
     let mut origin_estimate = *mic_events
         .iter()
         .min_by(|e1, e2| e1.time.total_cmp(&e2.time))
         .unwrap();
+    let mut mse = 0.0;
     for iter_id in 0..n_iters {
-        let mut mse = 0.0;
+        mse = 0.0;
         let mut residuals = Vec::new();
 
         for mic_event in mic_events {
@@ -89,7 +91,7 @@ pub fn source_of_shot<const DIM: usize>(
         origin_estimate = new_estimate;
     }
 
-    Err(())
+    Err((origin_estimate, mse))
 }
 
 /// Compute the distance between two points.
@@ -224,7 +226,7 @@ mod tests {
     #[test]
     fn three_dimensional_noisy() {
         for seed in 0..1000 {
-            source_helper::<3>(seed, 100000, 8, 5e-9, 0.05, 0.34, 1e-6);
+            source_helper::<3>(seed, 100_000, 8, 5e-9, 0.05, 0.34, 1e-6);
         }
     }
 
