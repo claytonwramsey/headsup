@@ -91,7 +91,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     drop(event_start_guard);
                     // if this thread hasn't seen a rising edge in this event, mark it as seeing one
                     // and update to match
-                    if seen_status_ref.load(Ordering::Relaxed) & 1 << mic_id != 0 {
+                    if seen_status_ref.load(Ordering::Relaxed) & 1 << mic_id == 0 {
                         seen_status_ref.fetch_or(1 << mic_id, Ordering::Relaxed);
                         println!(
                             "Microphone {mic_id} saw a rising edge at {:?}",
