@@ -7,6 +7,9 @@ edition = "2021"
 
 [dependencies]
 gpio-cdev = "0.5"
+lstsq = "0.5.0"
+nalgebra = "0.32.1"
+typenum = "1.16.0"
 
 [dev-dependencies]
 fastrand = "1.9"

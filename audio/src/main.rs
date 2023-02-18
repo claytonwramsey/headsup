@@ -1,5 +1,3 @@
-#![warn(clippy::pedantic)]
-
 use std::{
     sync::{
         atomic::{AtomicU8, Ordering},
@@ -10,21 +8,20 @@ use std::{
 
 use gpio_cdev::{EventRequestFlags, LineRequestFlags};
 
-use audio::localization::{source_of_shot, Event, Point};
+use audio::localization::compute_direction;
+use nalgebra::{SMatrix, SVector};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
     const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
-    const MIC_POINTS: [Point<3>; MIC_INPUT_PINS.len()] = [
-        Point([-0.09, 00.095, 00.00]),  // M0 - front left
-        Point([-0.14, 00.0015, 00.00]), // M1 - left
-        Point([-0.105, -0.06, 00.00]),  // M2- back left
-        Point([00.01, -0.115, 00.00]),  // M3 - back
-        Point([00.09, -0.085, 00.00]),  // M4 - back right
-        Point([00.12, 00.00, 00.00]),   // M5 - right
-        Point([00.085, 00.105, 00.00]), // M6 - front right
-        Point([00.00, 00.16, 00.00]),   // M7 - front
-    ];
+    let mic_points = SMatrix::<f32, 2, 8>::from_row_slice(&[
+        -0.09, -0.14, -0.105, -0.01, 0.09, 0.12, 0.085, 0.0, // x positions
+        0.095, 0.015, -0.06, -0.115, -0.085, 0.0, 0.105, 0.16, // y positions
+    ]);
+    let mic_points_ref = &mic_points;
+
+    let mic_times = Mutex::new(SVector::<f32, 8>::zeros());
+    let mic_times_ref = &mic_times;
 
     let event_start_time = Mutex::new(None);
     let event_start_ref = &event_start_time;
@@ -34,10 +31,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let seen_status = AtomicU8::new(0);
     let seen_status_ref = &seen_status;
     let event_duration = Duration::from_millis(100);
-
-    // List of events observed in this impulse observation
-    let events = Mutex::new(Vec::new());
-    let events_ref = &events;
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
@@ -56,7 +49,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     std::thread::scope(|s| {
         let mut handles = Vec::new();
         for (mic_id, event_source) in event_sources.enumerate() {
-            let point = MIC_POINTS[mic_id];
             handles.push(s.spawn(move || {
                 for event in event_source {
                     if event.is_err() {
@@ -68,7 +60,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     // if it's been a while since the last rising edge seen by anyone,
                     // or nobody's seeon one at all,
                     // it's a new rising edge event.
-                    if event_start_guard
+                    let last_event = if event_start_guard
                         .map(|start_time| now.duration_since(start_time) > event_duration)
                         .unwrap_or(true)
                     {
@@ -80,44 +72,33 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             "Microphone {mic_id} saw a rising edge at {:?} and started the event",
                             now.duration_since(start_time)
                         );
-
-                        events_ref.lock().unwrap().push(Event {
-                            location: point,
-                            time: now.duration_since(start_time).as_secs_f32(),
-                        });
+                        false
                     } else {
                         // make sure to release the mutex as early as possible!
                         drop(event_start_guard);
                         // if this thread hasn't seen a rising edge in this event, mark it as seeing one
                         // and update to match
                         if seen_status_ref.load(Ordering::Relaxed) & 1 << mic_id == 0 {
-                            seen_status_ref.fetch_or(1 << mic_id, Ordering::Relaxed);
+                            let prior_event_state =
+                                seen_status_ref.fetch_or(1 << mic_id, Ordering::Relaxed);
                             println!(
                                 "Microphone {mic_id} saw a rising edge at {:?}",
                                 now.duration_since(start_time)
                             );
-                        }
-                    }
-    
-                    let mut events_guard = events_ref.lock().unwrap();
-
-                    events_guard.push(Event {
-                        location: point,
-                        time: now.duration_since(start_time).as_secs_f32(),
-                    });
-
-                    if events_guard.len() == MIC_INPUT_PINS.len() {
-                        // we are the last event - initiate a localization process!
-                        let localization_result =
-                            source_of_shot(&events_guard, 10_000, 5e-9, 0.05);
-
-                        if let Ok((shot_evt, n_iters, train_err)) = localization_result {
-                            println!("Localized shot to {shot_evt:?} in {n_iters} iterations (MSE {train_err})");
+                            prior_event_state.count_ones() == MIC_INPUT_PINS.len() as u32 - 1
                         } else {
-                            println!("Failed to find solution for gunshot source");
+                            false
                         }
+                    };
 
-                        events_guard.clear();
+                    mic_times_ref.lock().unwrap()[mic_id] =
+                        now.duration_since(start_time).as_secs_f32();
+
+                    if last_event {
+                        let direction =
+                            compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
+
+                        println!("{direction:?}");
                     }
                 }
             }));
