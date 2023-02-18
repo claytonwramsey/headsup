@@ -105,7 +105,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         let direction =
                             compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
 
-                        println!("{direction:?}");
+                        println!("time vector: {}", mic_times_ref.lock().unwrap());
+                        println!("pointing to source direction: {direction:?}");
                     }
                 }
             }));
