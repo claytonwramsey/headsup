@@ -112,10 +112,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             // Set up file writing thread
             for line in std::io::stdin().lines() {
                 let line = line.unwrap();
-                write!(file, "{}", &line[..line.len() - 1]).unwrap();
+                write!(file, "{line}").unwrap();
                 for t in mic_times_ref.lock().unwrap().iter() {
-                    write!(file, "{t}").unwrap();
+                    write!(file, ", {t}").unwrap();
                 }
+                writeln!(file).unwrap();
                 file.flush().unwrap();
             }
         });
