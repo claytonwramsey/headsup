@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // this impulse event.
     let seen_status = AtomicU8::new(0);
     let seen_status_ref = &seen_status;
-    let event_duration = Duration::from_millis(100);
+    let event_duration = Duration::from_millis(1000);
 
     let mut chip = gpio_cdev::Chip::new("/dev/gpiochip0")?;
     let event_sources = MIC_INPUT_PINS.iter().map(|&pin| {
