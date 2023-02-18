@@ -1,6 +1,6 @@
 //! Algorithms for audio localization.
 
-use nalgebra::{Const, OMatrix, OVector};
+use nalgebra::{Const, OMatrix, OVector}; 
 
 const SPEED_OF_SOUND: f64 = 343.260;
 

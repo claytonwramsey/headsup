@@ -28,7 +28,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let event_start_time = Mutex::new(None);
     let event_start_ref = &event_start_time;
 
-    let mut file = File::create("results.csv").unwrap();
+    let mut file = File::options()
+        .read(true)
+        .write(true)
+        .create_new(true)
+        .open(std::env::args().nth(1).unwrap())
+        .unwrap();
     // Bitmap.
     // seen_status & 1 << i corresponds to whether the i-th mic has already seen a rising edge in
     // this impulse event.
@@ -105,7 +110,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         let direction =
                             compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
 
-                        println!("time vector: {}", mic_times_ref.lock().unwrap());
+                        println!("time vector: {:?}", mic_times_ref.lock().unwrap());
                         println!("pointing to source direction: {direction:?}");
                     }
                 }
@@ -116,10 +121,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             // Set up file writing thread
             for line in std::io::stdin().lines() {
                 let line = line.unwrap();
+                // header
                 write!(file, "{line}").unwrap();
+                // times
                 for t in mic_times_ref.lock().unwrap().iter() {
                     write!(file, ", {t}").unwrap();
                 }
+                // angle
+                let direction = compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
+                write!(file, ", {}", f64::atan2(direction[1], direction[0])).unwrap();
                 writeln!(file).unwrap();
                 file.flush().unwrap();
             }
