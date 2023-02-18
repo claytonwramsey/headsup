@@ -76,6 +76,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                             "Microphone {mic_id} saw a rising edge at {:?} and started the event",
                             now.duration_since(start_time)
                         );
+
+                        mic_times_ref.lock().unwrap()[mic_id] =
+                            now.duration_since(start_time).as_secs_f64();
                         false
                     } else {
                         // make sure to release the mutex as early as possible!
@@ -89,14 +92,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 "Microphone {mic_id} saw a rising edge at {:?}",
                                 now.duration_since(start_time)
                             );
+
+                            mic_times_ref.lock().unwrap()[mic_id] =
+                                now.duration_since(start_time).as_secs_f64();
                             prior_event_state.count_ones() == MIC_INPUT_PINS.len() as u32 - 1
                         } else {
                             false
                         }
                     };
-
-                    mic_times_ref.lock().unwrap()[mic_id] =
-                        now.duration_since(start_time).as_secs_f64();
 
                     if last_event {
                         let direction =
