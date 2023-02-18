@@ -34,6 +34,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .create_new(true)
         .open(std::env::args().nth(1).unwrap())
         .unwrap();
+
+    let degrees = std::env::args().nth(2).unwrap();
+    let range = std::env::args().nth(3).unwrap();
+
+    println!(
+        "Test on file {}: {degrees} degrees at range {range}",
+        std::env::args().nth(1).unwrap()
+    );
     // Bitmap.
     // seen_status & 1 << i corresponds to whether the i-th mic has already seen a rising edge in
     // this impulse event.
@@ -119,7 +127,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         s.spawn(move || {
             // Set up file writing thread
-            for line in std::io::stdin().lines() {
+            for (test_id, line) in std::io::stdin().lines().enumerate() {
                 let line = line.unwrap();
                 // header
                 write!(file, "{line}").unwrap();
@@ -134,7 +142,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 write!(file, ", {angle_deg}").unwrap();
                 writeln!(file).unwrap();
 
-                println!("saved angle {angle_deg}");
+                println!("Test {test_id}: angle {angle_deg}");
                 file.flush().unwrap();
             }
         });
