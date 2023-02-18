@@ -69,7 +69,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     // if it's been a while since the last rising edge seen by anyone,
                     // or nobody's seeon one at all,
                     // it's a new rising edge event.
-                    let last_event = if event_start_guard
+                    let _last_event = if event_start_guard
                         .map(|start_time| now.duration_since(start_time) > event_duration)
                         .unwrap_or(true)
                     {
@@ -106,13 +106,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         }
                     };
 
-                    if last_event {
-                        let direction =
-                            compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
+                    // if last_event {
+                    //     let direction =
+                    //         compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
 
-                        println!("time vector: {:?}", mic_times_ref.lock().unwrap());
-                        println!("pointing to source direction: {direction:?}");
-                    }
+                    //     println!("time vector: {:?}", mic_times_ref.lock().unwrap());
+                    //     println!("pointing to source direction: {direction:?}");
+                    // }
                 }
             }));
         }
@@ -129,8 +129,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
                 // angle
                 let direction = compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
-                write!(file, ", {}", f64::atan2(direction[1], direction[0])).unwrap();
+                let angle_deg =
+                    f64::atan2(direction[1], direction[0]) * 180.0 / std::f64::consts::PI;
+                write!(file, ", {angle_deg}").unwrap();
                 writeln!(file).unwrap();
+
+                println!("saved angle {angle_deg}");
                 file.flush().unwrap();
             }
         });
