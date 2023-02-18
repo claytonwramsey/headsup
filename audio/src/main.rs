@@ -1,4 +1,5 @@
 use std::{
+    fs::File,
     sync::{
         atomic::{AtomicU8, Ordering},
         Mutex,
@@ -10,6 +11,7 @@ use gpio_cdev::{EventRequestFlags, LineRequestFlags};
 
 use audio::localization::compute_direction;
 use nalgebra::{SMatrix, SVector};
+use std::io::Write;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
@@ -25,6 +27,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let event_start_time = Mutex::new(None);
     let event_start_ref = &event_start_time;
+
+    let mut file = File::create("results.csv").unwrap();
     // Bitmap.
     // seen_status & 1 << i corresponds to whether the i-th mic has already seen a rising edge in
     // this impulse event.
@@ -103,6 +107,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             }));
         }
+
+        s.spawn(move || {
+            // Set up file writing thread
+            for line in std::io::stdin().lines() {
+                let line = line.unwrap();
+                write!(file, "{}", &line[..line.len() - 1]).unwrap();
+                for t in mic_times_ref.lock().unwrap().iter() {
+                    write!(file, "{t}").unwrap();
+                }
+                file.flush().unwrap();
+            }
+        });
 
         for handle in handles {
             // wait for all threads to die (this will never happen)
