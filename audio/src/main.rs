@@ -127,10 +127,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         s.spawn(move || {
             // Set up file writing thread
-            for (test_id, line) in std::io::stdin().lines().enumerate() {
-                let line = line.unwrap();
+            for (test_id, _line) in std::io::stdin().lines().enumerate() {
                 // header
-                write!(file, "{line}").unwrap();
+                write!(file, "{degrees}, {range}").unwrap();
                 // times
                 for t in mic_times_ref.lock().unwrap().iter() {
                     write!(file, ", {t}").unwrap();
