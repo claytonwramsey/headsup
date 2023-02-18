@@ -16,13 +16,13 @@ use std::io::Write;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// The GPIO pin IDs which are associated with microphone input.
     const MIC_INPUT_PINS: [u32; 8] = [2, 3, 4, 9, 15, 18, 17, 27];
-    let mic_points = SMatrix::<f32, 2, 8>::from_row_slice(&[
+    let mic_points = SMatrix::<f64, 2, 8>::from_row_slice(&[
         -0.09, -0.14, -0.105, -0.01, 0.09, 0.12, 0.085, 0.0, // x positions
         0.095, 0.015, -0.06, -0.115, -0.085, 0.0, 0.105, 0.16, // y positions
     ]);
     let mic_points_ref = &mic_points;
 
-    let mic_times = Mutex::new(SVector::<f32, 8>::zeros());
+    let mic_times = Mutex::new(SVector::<f64, 8>::zeros());
     let mic_times_ref = &mic_times;
 
     let event_start_time = Mutex::new(None);
@@ -96,7 +96,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     };
 
                     mic_times_ref.lock().unwrap()[mic_id] =
-                        now.duration_since(start_time).as_secs_f32();
+                        now.duration_since(start_time).as_secs_f64();
 
                     if last_event {
                         let direction =
