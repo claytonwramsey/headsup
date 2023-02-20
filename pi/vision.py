@@ -158,7 +158,7 @@ class VisionSystem:
         os.system('clear')
         for t in trackletsData:
             tracklet_coordinates = np.array([t.spatialCoordinates.x, t.spatialCoordinates.y, t.spatialCoordinates.z])
-            rho = np.sqrt(t.spatialCoordinates.x ** 2 + t.spatialCoordinates.z ** 2) * 0.00328084
+            rho = np.sqrt(t.spatialCoordinates.x ** 2 + t.spatialCoordinates.z ** 2)  # * 0.00328084 (mm to ft)
             theta = np.arctan2(t.spatialCoordinates.x, t.spatialCoordinates.z) * 180/np.pi
 
             rho_theta_pairs.append((rho, theta))

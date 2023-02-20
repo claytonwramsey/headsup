@@ -41,7 +41,7 @@ class Display:
         Given an input OpenCV image, overlay a radar screen on top
 
         @param img: OpenCV image with
-        @param rt_pairs: a list of tuples containing (distance, angle) to each tracklet
+        @param rt_pairs: a list of tuples containing (distance in mm, angle in degrees) to each tracklet
 
         @return an OpenCV image
         """
@@ -53,8 +53,8 @@ class Display:
             # print(f"r, theta = {r}, {theta}")
             disp_r = r/self.MAX_DEPTH*self.size  # convert to pixels
             # print(f"Disp_r: {disp_r}")
-            disp_x = int(np.sin(theta)*disp_r) + self.location[0] + self.size//2
-            disp_y = int(np.cos(theta)*disp_r) + self.location[1]
+            disp_x = int(np.sin(theta*np.pi/180)*disp_r) + self.location[0] + self.size//2
+            disp_y = int(np.cos(theta*np.pi/180)*disp_r) + self.location[1]
             # print(f"(x, y) <- {disp_x}, {disp_y}")
 
             output_img = cv2.circle(output_img, (disp_x, disp_y), self.icon_size, self.static_color, -1)
