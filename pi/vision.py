@@ -146,7 +146,8 @@ class VisionSystem:
                 "Vision system was not initialized with `use_device()` - cannot perform periodic()")
 
         # Blocking call, will wait until a new data has arrived
-        cv_frame = self.depthQueue.get()
+        depth_ai_frame = self.depthQueue.get()
+        cv_frame = depth_ai_frame.getCvFrame()
 
         spatialData = self.spatialCalcQueue.get().getSpatialLocations()
         trackletsData = self.tracklets.get().tracklets
