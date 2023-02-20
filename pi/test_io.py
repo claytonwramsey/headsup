@@ -1,4 +1,4 @@
-from io import UserInputOutput
+from user_io import UserInputOutput
 
 
 def main():

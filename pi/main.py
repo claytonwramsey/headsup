@@ -2,7 +2,7 @@ import cv2
 from imu import Orientation
 from vision import VisionSystem
 from display import Display
-from io import UserInputOutput
+from user_io import UserInputOutput
 import depthai as dai
 
 
