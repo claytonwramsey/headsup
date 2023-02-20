@@ -1,3 +1,4 @@
+from typing import Tuple, List
 from pathlib import Path
 import depthai as dai
 import numpy as np
@@ -136,7 +137,7 @@ class VisionSystem:
 
         self.has_device = True
 
-    def periodic(self):
+    def periodic(self) -> Tuple[np.array, List[Tuple[float, float]]]:
         """
         Perform periodic steps associated with the vision system.
         """
@@ -145,12 +146,13 @@ class VisionSystem:
                 "Vision system was not initialized with `use_device()` - cannot perform periodic()")
 
         # Blocking call, will wait until a new data has arrived
-        self.depthQueue.get()
+        cv_frame = self.depthQueue.get()
 
         spatialData = self.spatialCalcQueue.get().getSpatialLocations()
         trackletsData = self.tracklets.get().tracklets
 
         depths = [int(data.spatialCoordinates.z) for data in spatialData]
+        rho_theta_pairs = []
         # print(depths)
         os.system('clear')
         for t in trackletsData:
@@ -158,7 +160,8 @@ class VisionSystem:
             rho = np.sqrt(t.spatialCoordinates.x ** 2 + t.spatialCoordinates.z ** 2) * 0.00328084
             theta = np.arctan2(t.spatialCoordinates.x, t.spatialCoordinates.z) * 180/np.pi
 
-            print(f"({rho}, {theta})")
+            rho_theta_pairs.append((rho, theta))
+            # print(f"({rho}, {theta})")
             # t.label = f"({rho}, {theta})"
 
             # label = VisionSystem.LABEL_MAP[t.label] if t.label < len(
@@ -166,3 +169,4 @@ class VisionSystem:
             # print(
             #     f"found tracklet {t.id}: {label} at ({t.spatialCoordinates.x:.4}, {t.spatialCoordinates.y:.4}, {t.spatialCoordinates.z:.4})")
 
+        return cv_frame, rho_theta_pairs
