@@ -135,7 +135,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     write!(file, ", {t}").unwrap();
                 }
                 // angle
-                let direction = compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap());
+                let direction =
+                    compute_direction(mic_points_ref, &mic_times_ref.lock().unwrap()).unwrap();
                 let angle_deg =
                     f64::atan2(direction[1], direction[0]) * 180.0 / std::f64::consts::PI;
                 write!(file, ", {angle_deg}").unwrap();
