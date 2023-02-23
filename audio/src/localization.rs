@@ -39,10 +39,11 @@ pub fn compute_direction<const DIM: usize, const N_MICS: usize>(
     assert!(N_MICS > 0);
     assert!(DIM > 0);
 
-    let min_time_idx = (0..times.len())
-        .min_by(|&i, &j| times[i].partial_cmp(&times[j]).unwrap())
+    let (min_time_idx, min_time) = times
+        .iter()
+        .enumerate()
+        .min_by(|(_, t1), (_, t2)| t1.partial_cmp(t2).unwrap())
         .unwrap();
-    let min_time = times[min_time_idx];
 
     let adjusted_distances = SPEED_OF_SOUND * times.add_scalar(-min_time);
 
