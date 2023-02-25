@@ -40,12 +40,10 @@ class VisionSystem:
 
         xoutDepth = pipeline.create(dai.node.XLinkOut)
         xoutSpatialData = pipeline.create(dai.node.XLinkOut)
-        xoutRGB = pipeline.create(dai.node.XLinkOut)
         xinSpatialCalcConfig = pipeline.create(dai.node.XLinkIn)
 
         trackerOut = pipeline.create(dai.node.XLinkOut)
 
-        xoutRGB.setStreamName("rgb")
         xoutDepth.setStreamName("depth")
         xoutSpatialData.setStreamName("spatialData")
         xinSpatialCalcConfig.setStreamName("spatialCalcConfig")
@@ -96,7 +94,6 @@ class VisionSystem:
         monoRight.out.link(stereo.right)
 
         camRgb.preview.link(spatialDetectionNetwork.input)
-        camRgb.preview.link(xoutRGB.input)
         objectTracker.out.link(trackerOut.input)
         spatialDetectionNetwork.passthrough.link(
             objectTracker.inputTrackerFrame)
@@ -129,8 +126,6 @@ class VisionSystem:
         After creating a device, initialize device-dependent parts of the vision system.
         """
         # Output queue will be used to get the depth frames from the outputs defined above
-        self.rgbQueue = device.getOutputQueue(
-            name="rgb", maxSize=4, blocking=False)
         self.depthQueue = device.getOutputQueue(
             name="depth", maxSize=4, blocking=False)
         self.spatialCalcQueue = device.getOutputQueue(
@@ -152,7 +147,7 @@ class VisionSystem:
 
         # Blocking call, will wait until a new data has arrived
         depth_ai_frame = self.depthQueue.get()
-        rgb_frame = self.rgbQueue.get()
+        rgb_frame = self.spatialCalcQueue.get()
         cv_frame = rgb_frame.getCvFrame()
 
         spatialData = self.spatialCalcQueue.get().getSpatialLocations()
