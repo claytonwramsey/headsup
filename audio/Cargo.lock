@@ -12,17 +12,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "audio"
-version = "0.1.0"
-dependencies = [
- "fastrand",
- "gpio-cdev",
- "lstsq",
- "nalgebra",
- "typenum",
-]
-
-[[package]]
 name = "autocfg"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -70,6 +59,17 @@ dependencies = [
  "bitflags",
  "libc",
  "nix",
+]
+
+[[package]]
+name = "headsup-audio"
+version = "0.1.0"
+dependencies = [
+ "fastrand",
+ "gpio-cdev",
+ "lstsq",
+ "nalgebra",
+ "typenum",
 ]
 
 [[package]]
