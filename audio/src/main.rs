@@ -28,13 +28,6 @@ fn main() {
     let event_start_time = Mutex::new(None);
     let event_start_ref = &event_start_time;
 
-    let degrees = std::env::args().nth(2).unwrap();
-    let range = std::env::args().nth(3).unwrap();
-
-    println!(
-        "Test on file {}: {degrees} degrees at range {range}",
-        std::env::args().nth(1).unwrap()
-    );
     // Bitmap.
     // seen_status & 1 << i corresponds to whether the i-th mic has already seen a rising edge in
     // this impulse event.
