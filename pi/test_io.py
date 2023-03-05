@@ -2,10 +2,10 @@ from user_io import UserInputOutput
 
 
 def main():
-    button1 = 15
-    button2 = 15
-    button3 = 15
-    led1 = 15
+    button1 = 16
+    button2 = 20
+    button3 = 21
+    led1 = 26
 
     io_manager = UserInputOutput(button1, button2, button3, led1)
     should_run = True
