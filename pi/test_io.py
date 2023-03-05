@@ -18,11 +18,9 @@ def main():
 
         if buttons[0]:
             io_manager.led_on()
-        else:
-            io_manager.led_off()
 
         if buttons[1]:
-            io_manager.toggle_led()
+            io_manager.led_off()
 
         if buttons[2]:
             should_run = False
