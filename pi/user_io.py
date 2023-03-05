@@ -19,7 +19,7 @@ class UserInputOutput:
         self.B3_pin = B3_pin
         self.L0_pin = L0_pin
 
-        self.led_on = False
+        self.is_led_on = False
 
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
@@ -30,18 +30,18 @@ class UserInputOutput:
         GPIO.setup(self.L0_pin, GPIO.OUT)
 
     def toggle_led(self):
-        self.led_on = not self.led_on
-        if self.led_on:
+        self.is_led_on = not self.is_led_on
+        if self.is_led_on:
             GPIO.output(self.L0_pin, GPIO.HIGH)
         else:
             GPIO.output(self.L0_pin, GPIO.LOW)
 
     def led_on(self):
-        self.led_on = True
+        self.is_led_on = True
         GPIO.output(self.L0_pin, GPIO.HIGH)
 
     def led_off(self):
-        self.led_off = True
+        self.is_led_on = True
         GPIO.output(self.L0_pin, GPIO.LOW)
 
     def poll(self) -> List[bool]:
