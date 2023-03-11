@@ -24,8 +24,8 @@ def main():
 
         while True:
             current_frame, rho_theta_pairs = vision.periodic()
-            orientation.periodic()
-            # print(orientation.current_quaternion())
+            current_orientation = orientation.get_euler_angles()
+            print(current_orientation)
 
             altered_frame = overlay_display.update_radar_screen(current_frame, rho_theta_pairs)
             cv2.imshow("HEADSUP Application", altered_frame)
