@@ -2,11 +2,10 @@
 Module for interfacing with OAK-D Lite IMU.
 Sections of code are provided by Luxonis in their IMU documentation.
 
-Date: 2/02/2023
+Date: 3/11/2023
 """
 
-from ahrs.filters import Madgwick
-from ahrs.common.quaternion import Quaternion
+from ahrs import Quaternion
 import depthai as dai
 import numpy as np
 
@@ -17,8 +16,6 @@ class Orientation:
         Initialize the orientation computation system.
         """
         self.has_device = False
-        self.madgwick_filter = Madgwick(Dt=4e-3)
-        self.orientation_q = np.array([1.0, 0.0, 0.0, 0.0])
         self.pipeline = pipeline  # dai pipeline
 
         # Define sources and outputs (setup from Luxonis example script)
@@ -28,9 +25,7 @@ class Orientation:
         xlinkOut.setStreamName("imu")
 
         # enable ACCELEROMETER_RAW at 500 hz rate
-        self.imu.enableIMUSensor(dai.IMUSensor.ACCELEROMETER_RAW, 500)
-        # enable GYROSCOPE_RAW at 400 hz rate
-        self.imu.enableIMUSensor(dai.IMUSensor.GYROSCOPE_RAW, 400)
+        self.imu.enableIMUSensor(dai.IMUSensor.ROTATION_VECTOR, 400)
         # it's recommended to set both setBatchReportThreshold and setMaxBatchReports to 20 when
         # integrating in a pipeline with a lot of input/output connections.
         # above this threshold packets will be sent in batch of X, if the host is not blocked and
@@ -45,7 +40,6 @@ class Orientation:
 
         # Link plugins IMU -> XLINK
         self.imu.out.link(xlinkOut.input)
-        self.orientation_q = np.asarray([1.0, 0.0, 0.0, 0.0])
 
     def use_device(self, device: dai.Device):
         """
@@ -58,29 +52,19 @@ class Orientation:
             name="imu", maxSize=50, blocking=False)
         self.has_device = True
 
-    def periodic(self):
+    def get_euler_angles(self) -> np.ndarray:
         """
-        Periodically update the data on the IMU.
-        """
-        if not self.has_device:
-            raise RuntimeError(
-                "IMU was not initialized with `use_device()` - cannot perform periodic()")
-
-        packets = self.imuQueue.get().packets
-
-        for packet in packets:
-
-            acc_data = packet.acceleroMeter
-            gyro_data = packet.gyroscope
-
-            self.orientation_q = self.madgwick_filter.updateIMU(
-                self.orientation_q, gyr=np.asarray([gyro_data.x, gyro_data.y, gyro_data.z]), acc=np.asarray([acc_data.x, acc_data.y, acc_data.z]))
-
-    def current_quaternion(self) -> np.ndarray:
-        """
-        Get the current heading of the orientation as a quaternion.
+        Get the current heading of the orientation as euler angles.
         """
         if not self.has_device:
             raise RuntimeError(
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
-        return self.orientation_q
+
+        imu_data = self.imuQueue.get()
+        latest_imu_packet = imu_data[-1]
+        rv = latest_imu_packet.rotationVector
+
+        orientation_quat = Quaternion([rv.real, rv.i, rv.j, rv.k])
+        euler_angles = orientation_quat.to_angles()
+
+        return euler_angles
