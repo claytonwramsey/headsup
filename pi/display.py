@@ -16,7 +16,7 @@ class Display:
     Run test_display.py to test this implementation
     """
     MIN_DEPTH = 1*12*25.4  # in mm
-    MAX_DEPTH = 13*12*25.4  # in mm
+    MAX_DEPTH = 20*12*25.4  # in mm
 
     def __init__(self, motion_color: Tuple[float, float, float],
                  static_color: Tuple[float, float, float],
@@ -46,6 +46,7 @@ class Display:
         @return an OpenCV image
         """
         output_img = np.copy(img)
+        output_img = cv2.flip(output_img, 1)  # flip horizontally
         output_img = cv2.rectangle(output_img, self.location, self.location + np.array([self.size, self.size]), (0, 0, 0), -1)
 
         for pair in rt_pairs:
