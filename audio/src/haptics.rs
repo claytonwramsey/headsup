@@ -14,7 +14,7 @@ const N_OUTPUT_PINS: usize = 1;
 /// The pin IDs for the output microphones.
 const MIC_OUTPUT_PINS: [u32; N_OUTPUT_PINS] = [17]; // TODO: fix
 /// One-half of the period of the buzzer's square waveform.
-const BUZZ_HALF_PERIOD: Duration = Duration::from_micros(5880);
+const BUZZ_HALF_PERIOD: Duration = Duration::from_micros(2941);
 /// Number of full periods of the buzzer wavefrom to go through before stopping buzzing.
 const N_BUZZ_PERIODS: usize = 100;
 
