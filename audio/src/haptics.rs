@@ -12,7 +12,7 @@ use once_cell::sync::Lazy;
 /// The number of microphone output pins.
 const N_OUTPUT_PINS: usize = 8;
 /// The pin IDs for the output microphones.
-const MIC_OUTPUT_PINS: [u32; N_OUTPUT_PINS] = [15; N_OUTPUT_PINS]; // TODO: fix
+const MIC_OUTPUT_PINS: [u32; N_OUTPUT_PINS] = [17; N_OUTPUT_PINS]; // TODO: fix
 /// One-half of the period of the buzzer's square waveform.
 const BUZZ_HALF_PERIOD: Duration = Duration::from_micros(5880);
 /// Number of full periods of the buzzer wavefrom to go through before stopping buzzing.
