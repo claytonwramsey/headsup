@@ -17,6 +17,8 @@ class Display:
     """
     MIN_DEPTH = 1*12*25.4  # in mm
     MAX_DEPTH = 20*12*25.4  # in mm
+    RING_DELTA = 5*12*25.4  # in mm
+    FOV = 70  # degrees
 
     def __init__(self, motion_color: Tuple[float, float, float],
                  static_color: Tuple[float, float, float],
@@ -48,6 +50,17 @@ class Display:
         output_img = np.copy(img)
         output_img = cv2.flip(output_img, 1)  # flip horizontally
         output_img = cv2.rectangle(output_img, self.location, self.location + np.array([self.size, self.size]), (0, 0, 0), -1)
+
+        # Draw distance circles
+        for circle_ind in range(1, int(self.MAX_DEPTH / self.RING_DELTA)):
+            output_img = cv2.circle(output_img, (self.size // 2, 0), self.RING_DELTA*float(circle_ind), (255, 255, 255), 2)
+
+        # Draw FOV lines
+        output_img = cv2.line(output_img, (0, self.size/(2*np.tan(self.FOV//2))), (self.size//2, 0), (255, 255, 255), 2)
+        output_img = cv2.line(output_img, (self.size//2, 0), (self.size, self.size/(2*np.tan(self.FOV//2))), (255, 255, 255), 2)
+
+        # Draw user circle
+        output_img = cv2.circle(output_img, (self.size//2, 0), self.icon_size, (0, 0, 255), -1)
 
         for pair in rt_pairs:
             r, theta = pair
