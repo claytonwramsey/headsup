@@ -53,14 +53,14 @@ class Display:
 
         # Draw distance circles
         for circle_ind in range(1, int(self.MAX_DEPTH / self.RING_DELTA)):
-            output_img = cv2.circle(output_img, (self.size // 2, 0), int(self.RING_DELTA*float(circle_ind)*self.size/self.MAX_DEPTH), (255, 255, 255), 2)
+            output_img = cv2.circle(output_img, (self.size // 2, 0), int(self.RING_DELTA*float(circle_ind)*self.size/self.MAX_DEPTH), (255, 255, 255), 1)
 
         # Draw FOV lines
-        output_img = cv2.line(output_img, (0, int(self.size/(2*np.tan(self.FOV//2)))), (self.size//2, 0), (255, 255, 255), 2)
-        output_img = cv2.line(output_img, (self.size//2, 0), (self.size, int(self.size/(2*np.tan(self.FOV//2)))), (255, 255, 255), 2)
+        output_img = cv2.line(output_img, (0, int(self.size/(2*np.tan(self.FOV//2)))), (self.size//2, 0), (255, 255, 255), 1)
+        output_img = cv2.line(output_img, (self.size//2, 0), (self.size, int(self.size/(2*np.tan(self.FOV//2)))), (255, 255, 255), 1)
 
         # Draw user circle
-        output_img = cv2.circle(output_img, (self.size//2, 0), self.icon_size, (0, 0, 255), -1)
+        output_img = cv2.circle(output_img, (self.size//2, 0), self.icon_size, (255, 0, 0), -1)
 
         for pair in rt_pairs:
             r, theta = pair
