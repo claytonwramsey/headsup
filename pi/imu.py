@@ -61,8 +61,7 @@ class Orientation:
                 "IMU was not initialized with `use_device()` - cannot perform periodic()")
 
         imu_data = self.imuQueue.get()
-        latest_imu_packet = imu_data[-1]
-        rv = latest_imu_packet.rotationVector
+        rv = imu_data.rotationVector
 
         orientation_quat = Quaternion([rv.real, rv.i, rv.j, rv.k])
         euler_angles = orientation_quat.to_angles()
