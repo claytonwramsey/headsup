@@ -21,8 +21,7 @@ class Display:
     FOV = 70  # degrees
 
     def __init__(self, motion_color: Tuple[float, float, float],
-                 static_color: Tuple[float, float, float],
-                 location: Tuple[float, float], size: float,
+                 static_color: Tuple[float, float, float], size: float,
                  icon_size=5):
         """
         Initialize display map with provided parameters
@@ -34,7 +33,6 @@ class Display:
         """
         self.motion_color = motion_color
         self.static_color = static_color
-        self.location = location
         self.size = size
         self.icon_size = icon_size
 
@@ -47,16 +45,7 @@ class Display:
 
         @return an OpenCV image
         """
-        # output_img = np.zeros((img.shape[0] + self.size, img.shape[1], img.shape[2]))
-        # output_img[self.size:, :, :] = img
-        # print(output_img.shape)
-        # print(output_img[self.size:, :, :].shape)
-        # print(img.shape)
-        # output_img = cv2.flip(output_img, 1)  # flip horizontally
-
-        radar_img = np.copy(img)
-        radar_img = radar_img[0:self.size, 0:self.size, :]
-        radar_img = cv2.rectangle(radar_img, self.location, self.location + np.array([self.size, self.size]), (0, 0, 0), -1)
+        radar_img = np.zeros((self.size, self.size, 3))
 
         # Draw distance circles
         for circle_ind in range(1, int(self.MAX_DEPTH / self.RING_DELTA)):
@@ -80,5 +69,4 @@ class Display:
 
             radar_img = cv2.circle(radar_img, (disp_x, disp_y), self.icon_size, self.static_color, -1)
 
-        # output_img[self.location[0]:self.location[0]+self.size, self.location[1]:self.location[1]+self.size] = radar_img
         return radar_img
