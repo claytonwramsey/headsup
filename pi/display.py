@@ -49,18 +49,21 @@ class Display:
         """
         output_img = np.copy(img)
         output_img = cv2.flip(output_img, 1)  # flip horizontally
-        output_img = cv2.rectangle(output_img, self.location, self.location + np.array([self.size, self.size]), (0, 0, 0), -1)
+
+        radar_img = np.copy(img)
+        radar_img = radar_img[0:self.size, 0:self.size, :]
+        radar_img = cv2.rectangle(radar_img, self.location, self.location + np.array([self.size, self.size]), (0, 0, 0), -1)
 
         # Draw distance circles
         for circle_ind in range(1, int(self.MAX_DEPTH / self.RING_DELTA)):
-            output_img = cv2.circle(output_img, (self.size // 2, 0), int(self.RING_DELTA*float(circle_ind)*self.size/self.MAX_DEPTH), (255, 255, 255), 1)
+            radar_img = cv2.circle(radar_img, (self.size // 2, 0), int(self.RING_DELTA*float(circle_ind)*self.size/self.MAX_DEPTH), (255, 255, 255), 1)
 
         # Draw FOV lines
-        output_img = cv2.line(output_img, (0, int(self.size/(2*np.tan(self.FOV//2)))), (self.size//2, 0), (255, 255, 255), 1)
-        output_img = cv2.line(output_img, (self.size//2, 0), (self.size, int(self.size/(2*np.tan(self.FOV//2)))), (255, 255, 255), 1)
+        radar_img = cv2.line(radar_img, (0, int(self.size/(2*np.tan(self.FOV//2)))), (self.size//2, 0), (255, 255, 255), 1)
+        radar_img = cv2.line(radar_img, (self.size//2, 0), (self.size, int(self.size/(2*np.tan(self.FOV//2)))), (255, 255, 255), 1)
 
         # Draw user circle
-        output_img = cv2.circle(output_img, (self.size//2, 0), self.icon_size, (255, 0, 0), -1)
+        radar_img = cv2.circle(radar_img, (self.size//2, 0), self.icon_size, (255, 0, 0), -1)
 
         for pair in rt_pairs:
             r, theta = pair
@@ -71,6 +74,7 @@ class Display:
             disp_y = int(np.cos(theta*np.pi/180)*disp_r) + self.location[1]
             # print(f"(x, y) <- {disp_x}, {disp_y}")
 
-            output_img = cv2.circle(output_img, (disp_x, disp_y), self.icon_size, self.static_color, -1)
+            radar_img = cv2.circle(radar_img, (disp_x, disp_y), self.icon_size, self.static_color, -1)
 
+        output_img[self.location[0]:self.location[0]+self.size, self.location[1]:self.location[1]+self.size] = radar_img
         return output_img
