@@ -63,8 +63,8 @@ class Display:
             # print(f"r, theta = {r}, {theta}")
             disp_r = r/self.MAX_DEPTH*self.size  # convert to pixels
             # print(f"Disp_r: {disp_r}")
-            disp_x = int(np.sin(theta*np.pi/180)*disp_r) + self.location[0] + self.size//2
-            disp_y = int(np.cos(theta*np.pi/180)*disp_r) + self.location[1]
+            disp_x = int(np.sin(theta*np.pi/180)*disp_r) + self.size//2
+            disp_y = int(np.cos(theta*np.pi/180)*disp_r)
             # print(f"(x, y) <- {disp_x}, {disp_y}")
 
             radar_img = cv2.circle(radar_img, (disp_x, disp_y), self.icon_size, self.static_color, -1)
