@@ -47,12 +47,12 @@ class Display:
 
         @return an OpenCV image
         """
-        output_img = np.zeros((img.shape[0] + self.size, img.shape[1], img.shape[2]))
-        output_img[self.size:, :, :] = img
-        print(output_img.shape)
-        print(output_img[self.size:, :, :].shape)
-        print(img.shape)
-        output_img = cv2.flip(output_img, 1)  # flip horizontally
+        # output_img = np.zeros((img.shape[0] + self.size, img.shape[1], img.shape[2]))
+        # output_img[self.size:, :, :] = img
+        # print(output_img.shape)
+        # print(output_img[self.size:, :, :].shape)
+        # print(img.shape)
+        # output_img = cv2.flip(output_img, 1)  # flip horizontally
 
         radar_img = np.copy(img)
         radar_img = radar_img[0:self.size, 0:self.size, :]
@@ -80,5 +80,5 @@ class Display:
 
             radar_img = cv2.circle(radar_img, (disp_x, disp_y), self.icon_size, self.static_color, -1)
 
-        output_img[self.location[0]:self.location[0]+self.size, self.location[1]:self.location[1]+self.size] = radar_img
-        return output_img
+        # output_img[self.location[0]:self.location[0]+self.size, self.location[1]:self.location[1]+self.size] = radar_img
+        return radar_img

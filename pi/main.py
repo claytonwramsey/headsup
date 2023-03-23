@@ -27,8 +27,9 @@ def main():
             current_orientation = orientation.get_euler_angles()
             print(current_orientation)
 
-            altered_frame = overlay_display.update_radar_screen(current_frame, rho_theta_pairs)
-            cv2.imshow("HEADSUP Application", altered_frame)
+            radar_frame = overlay_display.update_radar_screen(current_frame, rho_theta_pairs)
+            cv2.imshow("HEADSUP Application", current_frame)
+            cv2.imshow("Radar Screen", radar_frame)
             cv2.waitKey(0)
 
 
