@@ -47,7 +47,9 @@ class Display:
 
         @return an OpenCV image
         """
-        output_img = np.copy(img)
+        copy_img = np.copy(img)
+        output_img = np.zeros((img.shape[0] + self.size, img.shape[1], img.shape[2]))
+        output_img[self.size:, :, :] = copy_img
         output_img = cv2.flip(output_img, 1)  # flip horizontally
 
         radar_img = np.copy(img)
