@@ -29,6 +29,7 @@ def main():
 
             altered_frame = overlay_display.update_radar_screen(current_frame, rho_theta_pairs)
             cv2.imshow("HEADSUP Application", altered_frame)
+            cv2.waitKey(0)
 
 
 if __name__ == "__main__":
