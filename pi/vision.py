@@ -60,7 +60,7 @@ class VisionSystem:
             dai.MonoCameraProperties.SensorResolution.THE_400_P)
         monoRight.setBoardSocket(dai.CameraBoardSocket.RIGHT)
 
-        camRgb.setPreviewSize(750, 750)
+        camRgb.setPreviewSize(1200, 1200)
         camRgb.setResolution(
             dai.ColorCameraProperties.SensorResolution.THE_1080_P)
         camRgb.setInterleaved(False)
