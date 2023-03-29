@@ -1,0 +1,11 @@
+Output: Generates pick and place files
+Type  : Pick Place
+From  : Variant [[No Variations]] of PCB Document [pi_hat.pcb]
+   Generated File[pi_hat_rev2.txt]
+   Generated File[pi_hat_rev2.csv]
+
+
+Files Generated   : 2
+Documents Printed : 0
+
+Finished Output Generation At 9:13:14 PM On 3/24/2023

@@ -1,0 +1,186 @@
+Export log for : pi_hat_forclayton3.Rep
+AddingPadStyle (Default)
+AddingPadStyle P:EX244Y244D1001
+AddingPadStyle EF37X40TOP1
+AddingPadStyle EF36X39TOP1
+AddingPadStyle P:EX59Y59D351
+AddingPadStyle P:SX59Y59D351
+AddingPadStyle EF36X38TOP1
+AddingPadStyle EF32X39TOP1
+AddingPadStyle EF26X35TOP1
+AddingPadStyle EF34X37TOP1
+AddingPadStyle EF37X40TOP2
+AddingPadStyle P:EX55Y55D331
+AddingPadStyle EF28X20TOP1
+AddingPadStyle EF13X20TOP1
+AddingPadStyle EF17X20TOP1
+AddingPadStyle P:EX59Y59D352
+AddingPadStyle P:SX59Y59D352
+AddingPadStyle EF78X24TOP1
+Adding ViaStyle (Default)
+Adding ViaStyle V:EX50Y50D281
+Adding ViaStyle V:EX50Y50D201
+Adding TextStyle (Default)
+Adding TextStyle T:H13W4
+Adding TextStyle T:H13W41
+Adding PatternDef RESC1608X50N_1
+Adding PatternDef RESC1608X50N_2
+Adding PatternDef CAPC1608X90N_1
+Adding PatternDef HDR2X20_1
+Adding PatternDef CAPC1608X87N_1
+Adding PatternDef CAPC1608X87N_2
+Adding PatternDef CAPC1608X87N_3
+Adding PatternDef CAPC1608X87N_4
+Adding PatternDef CAPC1608X87N_5
+Adding PatternDef CAPC1608X87N_6
+Adding PatternDef PIN2_1
+Adding PatternDef PIN2_2
+Adding PatternDef PIN2_3
+Adding PatternDef PIN2_4
+Adding PatternDef PIN2_5
+Adding PatternDef PIN2_6
+Adding PatternDef RESC1508X55N_1
+Adding PatternDef RESC1508X55N_2
+Adding PatternDef RES_ERJ3EKF4703V_1
+Adding PatternDef RES_ERJ3EKF4703V_2
+Adding PatternDef RESC1608X55N_1
+Adding PatternDef RESC1608X55N_2
+Adding PatternDef RESC1608X50N_3
+Adding PatternDef RESC1608X50N_4
+Adding PatternDef RESC1508X55N_3
+Adding PatternDef RESC1608X50N_5
+Adding PatternDef RESC1608X55N_3
+Adding PatternDef RESC1608X50N_6
+Adding PatternDef RESC1608X50N_7
+Adding PatternDef RESC1608X50N_8
+Adding PatternDef RESC1608X55N_4
+Adding PatternDef RESC1608X50N_9
+Adding PatternDef RESC1608X55N_5
+Adding PatternDef RESC1608X55N_6
+Adding PatternDef RESC1508X55N_4
+Adding PatternDef AXIAL-0.3_1
+Adding PatternDef RESC1608X55N_7
+Adding PatternDef AXIAL-0.3_2
+Adding PatternDef RESC1608X50N_10
+Adding PatternDef RESC1608X50N_11
+Adding PatternDef RESC1608X55N_8
+Adding PatternDef RESC1508X55N_5
+Adding PatternDef RESC1608X50N_12
+Adding PatternDef RESC1608X50N_13
+Adding PatternDef RESC1508X55N_6
+Adding PatternDef RESC1608X55N_9
+Adding PatternDef RESC1508X55N_7
+Adding PatternDef RESC1608X55N_10
+Adding PatternDef RESC1608X55N_11
+Adding PatternDef RESC1608X50N_14
+Adding PatternDef RESC1608X55N_12
+Adding PatternDef RESC1608X55N_13
+Adding PatternDef RESC1608X50N_15
+Adding PatternDef RESC1608X55N_14
+Adding PatternDef RESC1608X55N_15
+Adding PatternDef RESC1608X50N_16
+Adding PatternDef RES_ERJ3EKF4703V_3
+Adding PatternDef RESC1608X55N_16
+Adding PatternDef HDR1X8_1
+Adding PatternDef SOD523_1
+Adding PatternDef HDR1X2_1
+Adding PatternDef HDR1X2_2
+Adding PatternDef HDR1X2_3
+Adding PatternDef X1-DFN1212-3_1
+Adding PatternDef X1-DFN1212-3_2
+Adding PatternDef X1-DFN1212-3_3
+Adding PatternDef X1-DFN1212-3_4
+Adding PatternDef RESC1608X50N_17
+Adding PatternDef RESC1608X50N_18
+Adding PatternDef RESC1608X50N_19
+Adding PatternDef RESC1608X50N_20
+Adding PatternDef RESC1608X50N_21
+Adding PatternDef HDR2X4_1
+Adding PatternDef SOIC127P600X175-14N_1
+Adding PatternDef SOIC127P600X175-14N_2
+Adding PatternDef SOIC127P600X175-14N_3
+Adding PatternDef SOIC127P600X175-14N_4
+Adding PatternDef RESC1608X55N_17
+Adding CompDef RESC1608X50N_1
+Adding CompDef RESC1608X50N_2
+Adding CompDef CAPC1608X90N_1
+Adding CompDef HDR2X20_1
+Adding CompDef CAPC1608X87N_1
+Adding CompDef CAPC1608X87N_2
+Adding CompDef CAPC1608X87N_3
+Adding CompDef CAPC1608X87N_4
+Adding CompDef CAPC1608X87N_5
+Adding CompDef CAPC1608X87N_6
+Adding CompDef PIN2_1
+Adding CompDef PIN2_2
+Adding CompDef PIN2_3
+Adding CompDef PIN2_4
+Adding CompDef PIN2_5
+Adding CompDef PIN2_6
+Adding CompDef RESC1508X55N_1
+Adding CompDef RESC1508X55N_2
+Adding CompDef RES_ERJ3EKF4703V_1
+Adding CompDef RES_ERJ3EKF4703V_2
+Adding CompDef RESC1608X55N_1
+Adding CompDef RESC1608X55N_2
+Adding CompDef RESC1608X50N_3
+Adding CompDef RESC1608X50N_4
+Adding CompDef RESC1508X55N_3
+Adding CompDef RESC1608X50N_5
+Adding CompDef RESC1608X55N_3
+Adding CompDef RESC1608X50N_6
+Adding CompDef RESC1608X50N_7
+Adding CompDef RESC1608X50N_8
+Adding CompDef RESC1608X55N_4
+Adding CompDef RESC1608X50N_9
+Adding CompDef RESC1608X55N_5
+Adding CompDef RESC1608X55N_6
+Adding CompDef RESC1508X55N_4
+Adding CompDef AXIAL-0.3_1
+Adding CompDef RESC1608X55N_7
+Adding CompDef AXIAL-0.3_2
+Adding CompDef RESC1608X50N_10
+Adding CompDef RESC1608X50N_11
+Adding CompDef RESC1608X55N_8
+Adding CompDef RESC1508X55N_5
+Adding CompDef RESC1608X50N_12
+Adding CompDef RESC1608X50N_13
+Adding CompDef RESC1508X55N_6
+Adding CompDef RESC1608X55N_9
+Adding CompDef RESC1508X55N_7
+Adding CompDef RESC1608X55N_10
+Adding CompDef RESC1608X55N_11
+Adding CompDef RESC1608X50N_14
+Adding CompDef RESC1608X55N_12
+Adding CompDef RESC1608X55N_13
+Adding CompDef RESC1608X50N_15
+Adding CompDef RESC1608X55N_14
+Adding CompDef RESC1608X55N_15
+Adding CompDef RESC1608X50N_16
+Adding CompDef RES_ERJ3EKF4703V_3
+Adding CompDef RESC1608X55N_16
+Adding CompDef HDR1X8_1
+Adding CompDef SOD523_1
+Adding CompDef HDR1X2_1
+Adding CompDef HDR1X2_2
+Adding CompDef HDR1X2_3
+Adding CompDef X1-DFN1212-3_1
+Adding CompDef X1-DFN1212-3_2
+Adding CompDef X1-DFN1212-3_3
+Adding CompDef X1-DFN1212-3_4
+Adding CompDef RESC1608X50N_17
+Adding CompDef RESC1608X50N_18
+Adding CompDef RESC1608X50N_19
+Adding CompDef RESC1608X50N_20
+Adding CompDef RESC1608X50N_21
+Adding CompDef HDR2X4_1
+Adding CompDef SOIC127P600X175-14N_1
+Adding CompDef SOIC127P600X175-14N_2
+Adding CompDef SOIC127P600X175-14N_3
+Adding CompDef SOIC127P600X175-14N_4
+Adding CompDef RESC1608X55N_17
+      Warning: Polygon has been imported as unpoured.  It will need to be repoured in PCAD
+      Warning: Polygon has been imported as unpoured.  It will need to be repoured in PCAD
+      Warning: Unexpected Free Text Object Found On Layer BottomOverlay.   This may cause problems in PCAD PCB
+ 
+EndLog

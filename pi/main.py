@@ -13,7 +13,7 @@ def main():
     vision = VisionSystem(pipeline)
     overlay_display = Display(motion_color=(255, 255, 0),
                               static_color=(0, 255, 255),
-                              size=200,
+                              size=300,
                               icon_size=5)
 
     io_manager = UserInputOutput(B1_pin=15, B2_pin=15, B3_pin=15, L0_pin=15)

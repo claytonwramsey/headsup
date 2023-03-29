@@ -2,7 +2,7 @@
 Module for HUD display output
 
 @author Team Headsup
-@date: 2/15/2023
+@date: 3/29/2023
 """
 
 from typing import List, Tuple
@@ -29,7 +29,6 @@ class Display:
 
         @param motion_color: RGB color of moving tracklets
         @param static_color: RGB color of static or slow-moving tracklets
-        @param location: a tuple with the location of the top left corner of the map
         @param icon_size: an integer with the size (in pixels) circles representing tracklets
         """
         self.motion_color = motion_color
@@ -37,7 +36,7 @@ class Display:
         self.size = size
         self.icon_size = icon_size
         self.font = cv2.FONT_HERSHEY_SIMPLEX
-        self.font_scale = 1
+        self.font_scale = 0.1
         self.font_thickness = 1
         self.line_type = 2
 
