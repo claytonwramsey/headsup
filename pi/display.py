@@ -36,7 +36,7 @@ class Display:
         self.size = size
         self.icon_size = icon_size
         self.font = cv2.FONT_HERSHEY_SIMPLEX
-        self.font_scale = 0.1
+        self.font_scale = 0.3
         self.font_thickness = 1
         self.line_type = 2
 
