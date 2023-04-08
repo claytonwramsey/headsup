@@ -1,0 +1,33 @@
+------------------------------------------------------------------------------------------
+Gerber File Extension Report For: pi_hat_rev2.GBR   3/24/2023  9:13:13 PM
+------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------
+Layer Extension     Layer Description                      
+------------------------------------------------------------------------------------------
+.gbr                Top Overlay, Top Silk                   
+.gbr                Top Paste, Top Paste                    
+.gbr                Top Solder, Top Mask                    
+.gbr                Top Layer, TOP                          
+.gbr                Internal Plane 1, PLANE1                
+.gbr                Internal Plane 2, PLANE2                
+.gbr                Bottom Layer, Bottom                    
+.gbr                Bottom Solder, Bot Mask                 
+.gbr                Bottom Paste, Bot Paste                 
+.gbr                Bottom Overlay, Bot Silk                
+.gbr                Mechanical 1, Top Assy                  
+.gbr                Mechanical 2, Bot Assy                  
+.gbr                Mechanical 3, MECH13                    
+.gbr                Mechanical 4, MECH15                    
+.gbr                Mechanical 13                           
+.gbr                Mechanical 15                           
+.gbr                Keep-Out Layer, Board                   
+.gbr                Dielectric1                             
+.gbr                Dielectric6                             
+.gbr                Multi-Layer                             
+.gbr                Dielectric5                             
+.gbr                Drill Drawing                           
+.gbr                Drill Guide                             
+.gbr                Profile                                 
+------------------------------------------------------------------------------------------

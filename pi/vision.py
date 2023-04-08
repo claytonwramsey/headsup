@@ -24,7 +24,7 @@ class VisionSystem:
         self.has_device = False
 
         nnPath = str(
-            (Path(__file__).parent / Path('mobilenet-ssd_openvino_2021.4_5shave.blob')).resolve().absolute())
+            (Path(__file__).parent / Path('resnet34-ssd1200_openvino_2021.4_5shave.blob')).resolve().absolute())
 
         # Define sources and outputs
         monoLeft = pipeline.create(dai.node.MonoCamera)
@@ -60,7 +60,7 @@ class VisionSystem:
             dai.MonoCameraProperties.SensorResolution.THE_400_P)
         monoRight.setBoardSocket(dai.CameraBoardSocket.RIGHT)
 
-        camRgb.setPreviewSize(300, 300)
+        camRgb.setPreviewSize(1200, 1200)
         camRgb.setResolution(
             dai.ColorCameraProperties.SensorResolution.THE_1080_P)
         camRgb.setInterleaved(False)

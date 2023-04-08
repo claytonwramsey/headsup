@@ -1,0 +1,112 @@
+Designator,Mid X,Mid Y,Layer,Rotation,Comment,Footprint,Description
+C7,63.119,43.688,TopLayer,180,06035C104KAT2A,CAPC1608X90N,"CAPACITOR, 0603, 100NF, 50V, X7R; Application:Standard; Capacitance:100000pF; Capacitance Tolerance:± 10%; Series:06035C; Voltage, Rating:50V dc; Capacitor Dielectric Type:Ceramic Multi-Layer; Case Style:0603; Termination Type:SMD; Dielectric Characteristic:X7R; Max Operating Temperature:125°C; Min Temperature Operating:-55°C; Operating Temperature Range:-55°C to +125°C; Terminal Type:Surface Mount (SMD, SMT); Tolerance, +:10%; Tolerance, -:10%; Voltage Rating, DC:50V"
+C6,62.992,60.071,TopLayer,180,06035C104KAT2A,CAPC1608X90N,"CAPACITOR, 0603, 100NF, 50V, X7R; Application:Standard; Capacitance:100000pF; Capacitance Tolerance:± 10%; Series:06035C; Voltage, Rating:50V dc; Capacitor Dielectric Type:Ceramic Multi-Layer; Case Style:0603; Termination Type:SMD; Dielectric Characteristic:X7R; Max Operating Temperature:125°C; Min Temperature Operating:-55°C; Operating Temperature Range:-55°C to +125°C; Terminal Type:Surface Mount (SMD, SMT); Tolerance, +:10%; Tolerance, -:10%; Voltage Rating, DC:50V"
+C5,63.119,45.847,TopLayer,180,06035C104KAT2A,CAPC1608X90N,"CAPACITOR, 0603, 100NF, 50V, X7R; Application:Standard; Capacitance:100000pF; Capacitance Tolerance:± 10%; Series:06035C; Voltage, Rating:50V dc; Capacitor Dielectric Type:Ceramic Multi-Layer; Case Style:0603; Termination Type:SMD; Dielectric Characteristic:X7R; Max Operating Temperature:125°C; Min Temperature Operating:-55°C; Operating Temperature Range:-55°C to +125°C; Terminal Type:Surface Mount (SMD, SMT); Tolerance, +:10%; Tolerance, -:10%; Voltage Rating, DC:50V"
+R10_A_IN_1,43.815,55.4991,TopLayer,270,100k,RESC1608X55N,
+R24_A_IN_1,34.2901,44.831,TopLayer,0,100k,RESC1608X55N,
+R18_A_IN_1,29.21,54.8641,TopLayer,270,100k,RESC1608X55N,
+R2_A_IN_1,43.942,48.387,TopLayer,90,100k,RESC1608X55N,
+R10_A_IN_2,46.8631,32.1439,TopLayer,270,100k,RESC1608X55N,
+R2_A_IN_2,46.863,27.94,TopLayer,90,100k,RESC1608X55N,
+R24_A_IN_2,33.528,25.273,TopLayer,90,100k,RESC1608X55N,
+R18_A_IN_2,25.654,34.2901,TopLayer,270,100k,RESC1608X55N,
+R17_A_IN_1,57.023,38.7479,TopLayer,180,10k,RESC1608X50N,RP 1J 0.166W 10K 0.1% 25PPM 1K RL
+R17_A_IN_2,53.858,24.5239,TopLayer,180,10k,RESC1608X50N,RP 1J 0.166W 10K 0.1% 25PPM 1K RL
+R5_A_IN_1,38.862,44.8439,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R5_A_IN_2,39.116,24.7779,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R12_A_IN_1,19.304,58.9409,TopLayer,270,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R21_A_IN_1,20.32,52.8449,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R20_A_IN_1,31.651,59.4489,TopLayer,180,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R27_A_IN_1,16.002,44.0691,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R13_A_IN_1,43.942,59.4361,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R26_A_IN_1,27.94,58.8139,TopLayer,270,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R4_A_IN_1,16.51,58.3059,TopLayer,270,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R26_A_IN_2,29.7181,37.6049,TopLayer,270,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R20_A_IN_2,33.1165,36.4379,TopLayer,180,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R13_A_IN_2,41.656,38.608,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R21_A_IN_2,20.574,31.3691,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R12_A_IN_2,20.457,39.2559,TopLayer,270,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R4_A_IN_2,17.663,39.1289,TopLayer,270,1K,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R27_A_IN_2,13.081,23.3681,TopLayer,0,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H1,9.868,16.1419,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H2,15.964,16.1419,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H3,21.7184,16.2191,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H4,28.194,16.256,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H5,34.544,16.129,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H6,40.367,16.1259,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H7,46.59,16.1259,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R1_H8,52.813,16.1259,TopLayer,90,1k,RESC1608X50N,CPF 0603 100R 1% 50PPM 1K RL
+R8_A_IN_1,41.783,51.5621,TopLayer,270,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R8_A_IN_2,48.905,39.6369,TopLayer,270,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R29_A_IN_1,24.892,49.784,TopLayer,270,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R23_A_IN_1,25.6541,52.959,TopLayer,0,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R16_A_IN_1,28.956,50.419,TopLayer,0,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R23_A_IN_2,25.654,29.464,TopLayer,90,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R29_A_IN_2,29.21,29.591,TopLayer,270,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+R16_A_IN_2,29.21,25.273,TopLayer,0,1M,RESC1508X55N,"RES, THIN FILM, 1M, 1%, 0.1W, 0603"
+D1_H1,12.7,20.066,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H2,18.796,20.066,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H3,24.892,20.066,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H4,30.988,20.066,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H5,37.084,20.066,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H6,43.18,19.939,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H7,49.403,20.066,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+D1_H8,56.134,20.447,TopLayer,0,1PS79SB70,SOD523,"<H2>General-purpose Schottky diode</H2> General-purpose Schottky diodes in small Surface-Mounted Device (SMD) plastic  packages. <p><author>AAL Eindhoven MK</author><hr><p> <img src=http://www.nxp.com/img/NXP_logo.png"">"""
+C1_A_IN_1,11.43,48.1331,TopLayer,180,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C1_A_IN_2,11.712,31.6359,TopLayer,180,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C3_A_IN_1,10.9221,52.832,TopLayer,90,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C4_A_IN_1,12.573,43.688,TopLayer,180,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C2_A_IN_1,20.32,55.1309,TopLayer,180,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C4_A_IN_2,11.5571,27.3051,TopLayer,90,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C3_A_IN_2,11.567,34.1759,TopLayer,180,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+C2_A_IN_2,20.066,34.671,TopLayer,180,1uF,CAPC1608X87N,"CAP, MLCC, 1UF, 16V, X7R, 0603, REEL; Product Range:MULTICOMP - MC Series; Capacitance:1µF; Capacitance Tolerance:± 10%; Dielectric Characteristic:X7R; Voltage Rating:16V; Capacitor Case Style:0603 [1608 Metric]; Operating Temperature Min:-55°C; Operating Temperature Max:125°C; Packaging:Full Reel; MSL:-; SVHC:No SVHC (20-Jun-2013); Capacitor Terminals:SMD"
+R3_A_IN_1,21.209,45.9741,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R3_A_IN_2,20.719,27.051,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R11_A_IN_1,11.049,58.9281,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R6_A_IN_1,14.351,58.801,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R15_A_IN_1,23.749,58.8139,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R28_A_IN_1,25.781,59.309,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R19_A_IN_1,15.494,53.721,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R25_A_IN_1,16.129,49.022,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R19_A_IN_2,16.012,34.4299,TopLayer,270,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R15_A_IN_2,24.003,39.3701,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R11_A_IN_2,11.585,38.3669,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R6_A_IN_2,15.123,39.0019,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R28_A_IN_2,27.4321,38.862,TopLayer,90,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R25_A_IN_2,14.986,27.6989,TopLayer,270,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R22_A_IN_1,38.227,59.309,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R22_A_IN_2,35.052,38.8749,TopLayer,0,2.2K,RESC1608X55N,RES SMD 1.6M OHM 5% 1/10W 0603
+R9_A_IN_1,20.955,49.657,TopLayer,0,470K,RES_ERJ3EKF4703V,
+R9_A_IN_2,24.257,25.273,TopLayer,0,470K,RES_ERJ3EKF4703V,
+R7_A_IN_1,44.958,51.726,TopLayer,90,470K,RES_ERJ3EKF4703V,
+R7_A_IN_2,45.029,39.1289,TopLayer,90,470K,RES_ERJ3EKF4703V,
+R32,58.6421,57.0455,TopLayer,270,CRGS0603J10K,RESC1608X50N,CRGS0603 Anti-Surge Resistor 5% 10K
+R31,57.912,51.308,TopLayer,0,CRGS0603J10K,RESC1608X50N,CRGS0603 Anti-Surge Resistor 5% 10K
+R30,59.055,45.847,TopLayer,270,CRGS0603J10K,RESC1608X50N,CRGS0603 Anti-Surge Resistor 5% 10K
+M*1_H1,13.081,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H2,19.177,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H3,25.311,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H4,31.407,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H5,37.503,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H6,43.58,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H7,49.803,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+M*1_H8,56.007,16.2529,TopLayer,90,Haptic Motor,HDR1X2,"Header, 2-Pin"
+P1,33.6736,64.8512,TopLayer,0,Header 20X2,HDR2X20,"Header, 20-Pin, Dual row"
+P3,63.246,53.213,TopLayer,90,Header 4X2,HDR2X4,"Header, 4-Pin, Dual row"
+P2,63.373,31.496,TopLayer,270,Header 8,HDR1X8,"Header, 8-Pin"
+MK1_A_IN_1,5.098,47.5653,TopLayer,0,Mic2,PIN2,Microphone
+MK1_A_IN_2,5.098,28.1162,TopLayer,0,Mic2,PIN2,Microphone
+MK4_A_IN_1,5.098,42.703,TopLayer,0,Mic2,PIN2,Microphone
+MK2_A_IN_1,5.098,57.2899,TopLayer,0,Mic2,PIN2,Microphone
+MK3_A_IN_1,5.098,52.4276,TopLayer,0,Mic2,PIN2,Microphone
+MK4_A_IN_2,5.098,23.2539,TopLayer,0,Mic2,PIN2,Microphone
+MK2_A_IN_2,5.098,37.8407,TopLayer,0,Mic2,PIN2,Microphone
+MK3_A_IN_2,5.098,32.9785,TopLayer,0,Mic2,PIN2,Microphone
+Q1_H1,9.671,20.566,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H2,16.237,20.439,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H3,21.825,20.82,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H4,28.448,20.709,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H5,34.436,20.947,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H6,40.367,20.82,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H7,46.59,20.947,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET
+Q1_H8,52.851,20.947,TopLayer,0,MOSFET-N,X1-DFN1212-3,N-Channel MOSFET

@@ -13,7 +13,7 @@ def main():
     vision = VisionSystem(pipeline)
     overlay_display = Display(motion_color=(255, 255, 0),
                               static_color=(0, 255, 255),
-                              location=(0, 0), size=100,
+                              size=300,
                               icon_size=5)
 
     io_manager = UserInputOutput(B1_pin=15, B2_pin=15, B3_pin=15, L0_pin=15)
@@ -27,8 +27,9 @@ def main():
             current_orientation = orientation.get_euler_angles()
             print(current_orientation)
 
-            altered_frame = overlay_display.update_radar_screen(current_frame, rho_theta_pairs)
-            cv2.imshow("HEADSUP Application", altered_frame)
+            radar_frame = overlay_display.update_radar_screen(current_frame, rho_theta_pairs)
+            cv2.imshow("HEADSUP Application", current_frame)
+            cv2.imshow("Radar Screen", radar_frame)
             cv2.waitKey(0)
 
 
